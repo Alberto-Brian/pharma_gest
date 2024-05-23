@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
-export const serverError = (
-    error: Error, request: Request,
+export const serverError = ( err: Error, request: Request,
     response: Response, next: NextFunction) => {
-        if(error instanceof Error){
-            return response.status(500).send(error.message);
-        }
-
-        return response.json({
-            status: "error",
-            message: "Internal server error - " + error
-        })
+        const error = new Error('Server route not found!!')
+        next(error);
     }
+    
+    
+export const routeNotFound = (error:any , req: Request, res: Response) => {
+        return res.status(404).json({error: error?.message});
+    }   

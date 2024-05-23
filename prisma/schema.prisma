@@ -24,7 +24,7 @@ model Pharma_gest {
   logo            String?
   url_pharmacy    String?
   info            String?
-  pharmacy        Pharmacy[]
+  // pharmacy        Pharmacy[]
   admin           Admin[]
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
@@ -57,6 +57,8 @@ model Pharmacy{
   id              String      @id @default(uuid())
   name            String
   email           String      @unique
+  doc             String
+  banking_account String
   phone           String?
   address         String?
   status          Boolean     @default(true)
@@ -68,10 +70,10 @@ model Pharmacy{
   employee        Employee[]
   business_man    Business_man[]
   product         Product[]
-  pharma_gest     Pharma_gest @relation(fields: [id_pharma_gest], references: [id])
-  id_pharma_gest  String      @unique
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
+  deleted_at      DateTime?
+  deleted_by      String      @default("")
 } 
 
 model Business_man {

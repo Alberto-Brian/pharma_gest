@@ -20,7 +20,7 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
         return user_data;
     }
 
-    async readAllUsers(page: number, perPage: number): Promise<IResultPaginated>{
+    async readAllBusinessMen(page: number, perPage: number): Promise<IResultPaginated>{
         const business_men = await prisma.business_man.findMany({
             select: {
                 id: true,
@@ -41,7 +41,7 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
         return result;
     }
 
-     async readAllDeletedUsers(page: number, perPage: number): Promise<IResultPaginated>{
+     async readAllDeletedBusinessMen(page: number, perPage: number): Promise<IResultPaginated>{
          const business_men = await prisma.business_man.findMany({
                  where: {
                     AND: {
@@ -51,7 +51,8 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
                     }
             }, select:{
                 id: true,
-                // password: true,
+                password: false,
+                username: true,
                 email: true,
                 status: true,
                 created_at: true,

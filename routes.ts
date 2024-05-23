@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { userRoutes } from "./src/entities/User/routes";
-import { authRoutes } from "./src/entities/Auth/routes";
-import { businessManRoutes } from "./src/entities/BusinessMan/routes";
+import { userRoutes } from "./src/usecases/User/routes";
+import { authRoutes } from "./src/usecases/Auth/routes";
+import { businessManRoutes } from "./src/usecases/BusinessMan/routes";
 const routes = Router();
 
 const START_URL = "/pharmagest"

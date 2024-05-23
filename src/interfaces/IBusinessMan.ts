@@ -13,8 +13,7 @@ export default interface IBusinessMan extends IBase {
     deleted_by: string 
 }
 
-export interface IBusinessManResponse {
-    id: string,
+export interface IBusinessManResponse extends IBase{
     username: string,
     email: string,
     address: string | null,
@@ -22,8 +21,6 @@ export interface IBusinessManResponse {
     status: boolean,
     birthdate: Date | null,
     avatar: string | null,
-    created_at: Date,
-    updated_at: Date | null,
 }
 
 export interface ICreatedBusinessManResponse {
