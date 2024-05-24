@@ -1,5 +1,5 @@
 import PrismaBusinessManRepository from "../../../prisma_repositories/PrismaBusinessManRepository";
-import FindByEmailBusinessManEntity from "./FindByEmailBusinessManEntity";
+import FindByEmailBusinessManEntity from "./FindByEmailBusinessManUseCase";
 import FindByEmailBusinessManController from "./FindByEmailBusinessManController";
 
 export default function FindByEmailBusinessManFactory(): FindByEmailBusinessManController {

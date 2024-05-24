@@ -4,7 +4,7 @@ import IBusinessManRepository from "../../../repositories/IBusinessManRepository
 import prisma from "../../../utils/prisma";
 import validator from "validator";
 
-export default class FindByEmailBusinessMasEntity {
+export default class FindByEmailBusinessMasUseCase {
   constructor(
     private userRepository: IBusinessManRepository
   ){}

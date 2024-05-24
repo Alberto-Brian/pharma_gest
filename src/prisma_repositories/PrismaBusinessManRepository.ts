@@ -86,6 +86,15 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
         return business_men;
     }
 
+    async setPharmacy(id_pharmacy: string, id_business_man: string): Promise<void>{
+        await prisma.business_man.update({
+            where: { id: id_business_man },
+            data: { 
+                //  pharmacy: id_pharmacy
+             },
+        })
+    }
+
     async delete(id: string, user: string): Promise<void> {
         await prisma.business_man.update({
             where: { id },

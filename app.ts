@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import routes from './routes';
 import cors from 'cors';
 import { serverError, routeNotFound } from './src/helpers/serverError';
-import { request } from 'http';
 export const app = express();
 
 app.use('/src/uploads', express.static('uploads'))

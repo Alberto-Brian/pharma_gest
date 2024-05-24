@@ -1,5 +1,5 @@
-import { IPharmacyRequest, IPharmacyResponse } from "@/interfaces/IPharmacy";
-import IPharmacyRepository from "@/repositories/IPharmacyRepositorio";
+import { IPharmacyRequest, IPharmacyResponse } from "../../../interfaces/IPharmacy";
+import IPharmacyRepository from "../../../repositories/IPharmacyRepositorio";
 import validator from "validator";
 
 export default class CreatePharmacyUseCase {
@@ -16,6 +16,15 @@ export default class CreatePharmacyUseCase {
         if(!validator.isEmail(data.email)){
             throw new Error('Invalid email!!')
         }
+
+        if(!validator.isNumeric(data.banking_account)){
+            throw new Error('Invalid banking account, it can only have numbers')
+        }
+
+        if(!validator.isNumeric(data.banking_account)){
+            throw new Error('Invalid phone number, it can only have numbers')
+        }
+
 
         const pharmacyExists = await this.pharmacyRepository.findByEmail(data.email)
         if(pharmacyExists){

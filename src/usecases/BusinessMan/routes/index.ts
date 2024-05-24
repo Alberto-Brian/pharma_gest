@@ -5,13 +5,14 @@ import FindByIdBusinessManFactory from '../findByIdBusiness/FindByIdBusinessManF
 import DeleteBusinessManFactory from '../DeleteBusinessMan/DeleteBusinessManFactory';
 import FindByEmailBusinessManFactory from '../FindByEmailBusinessMan/FindByEmailBusinessManFactory';
 import ReadAllDeletedBusinessMenFactory from '../ReadAllDeletedBusinessMen/ReadAllDeletedBusinessMenFactory';
+import { ensuredAuthenticated } from '../../../middlewares/auth';
 export const businessManRoutes = Router();
 
 businessManRoutes.route('/create')
     .post((request, response) => { return CreateBusinessManFactory().handler(request, response)})
     
 businessManRoutes.route('/read')
-    .get((request, response) => { return ReadAllBusinessMenFactory().handler(request, response)});    
+    .get(ensuredAuthenticated(), (request, response) => { return ReadAllBusinessMenFactory().handler(request, response)});    
 
 businessManRoutes.route('/findByEmail/:email')
     .get((request, response) => {return FindByEmailBusinessManFactory().handler(request, response)})

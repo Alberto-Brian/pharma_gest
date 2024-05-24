@@ -36,4 +36,10 @@ export interface IBusinessManRequest {
     username: string,
     email: string,
     password: string,
+    pharmacy_id?: string
+}
+
+export interface IBusinessSetPharmacyRequest{
+    id_pharmacy: string;
+    id_business_man: string
 }

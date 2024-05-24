@@ -1,4 +1,4 @@
-import PrismaPharmacyRepository from "@/prisma_repositories/PrismaPharmacyRepository";
+import PrismaPharmacyRepository from "../../../prisma_repositories/PrismaPharmacyRepository";
 import CreatePharmacyUseCase from "./CreatePharmacyUseCase";
 import CreatePharmacyController from "./CreatePharmacyController";
 

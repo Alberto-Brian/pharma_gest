@@ -20,7 +20,13 @@ export interface IPharmacyRequest {
     name: string
     email: string
     doc: string
-    banking_account: string
+    banking_account: string,
+    phone?: string,
+    address?: string,
+    info?: string,
+    avatar?: string,
+    logo?: string
+
 }
 
 export interface IPharmacyResponse extends IBase {

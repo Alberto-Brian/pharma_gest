@@ -8,9 +8,9 @@ export default class CreateBusinessManController {
 
     async handler(request: Request, response: Response): Promise<Response>{
         try {
-            const {username, email, password } = request.body;
+            const {username, email, password, pharmacy_id } = request.body;
             const responsee = await this.userEntity.run({
-                username, email, password
+                username, email, password, pharmacy_id
             });
 
             return response.status(201).send({responsee});

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import FindByEmailBusinessMasEntity from './FindByEmailBusinessManEntity';
+import FindByEmailBusinessMasUseCase from './FindByEmailBusinessManUseCase';
 
 export default class FindByEmailBusinessManController{
   constructor(
-    private userRepository: FindByEmailBusinessMasEntity
+    private userRepository: FindByEmailBusinessMasUseCase
   ){}
 
   async handler(request: Request, response: Response){

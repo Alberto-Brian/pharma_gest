@@ -7,6 +7,5 @@ export default interface IPharmacyRepository {
     readAllDeletedPharmacies:  (page: number, perPage: number) => Promise<IResultPaginated>
     findByEmail: (email: string) => Promise<IPharmacyResponse | null>;
     findById: (id: string) => Promise<IPharmacyResponse | null>;
-    delete: (id: string, user: string) => Promise<void>;
-    
+    delete: (id: string , user: string) => Promise<void>;
 }

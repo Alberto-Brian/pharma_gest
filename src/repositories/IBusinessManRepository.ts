@@ -9,4 +9,5 @@ export default interface IBusinessManRepository {
     findByEmail: (email: string) => Promise<IBusinessManResponse | null>;
     findById: (id: string) => Promise<IBusinessManResponse | null>;
     delete: (id: string, user: string) => Promise<void>;
+    setPharmacy: (id_pharmacy: string, id_business_man: string)=> Promise<void>;
 } 

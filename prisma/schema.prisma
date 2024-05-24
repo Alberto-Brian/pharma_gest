@@ -61,15 +61,15 @@ model Pharmacy{
   banking_account String
   phone           String?
   address         String?
-  status          Boolean     @default(true)
+  status          Boolean     @default(false)
   avatar          String?
   logo            String?
   url_pharmacy    String?
   info            String?
   user            User[]
   employee        Employee[]
-  business_man    Business_man[]
   product         Product[]
+  business_man    Business_man[]
   created_at      DateTime    @default(now())
   updated_at      DateTime    @updatedAt
   deleted_at      DateTime?

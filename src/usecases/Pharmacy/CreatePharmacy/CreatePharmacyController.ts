@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import CreatePharmacyUseCase from "./CreatePharmacyUseCase";
-import upload from '@/utils/multer';
+// import upload from '../../../middlewares/multer';
 
 export default class CreatePharmacyController {
     constructor(
@@ -9,10 +9,13 @@ export default class CreatePharmacyController {
 
     async handler(request: Request, response: Response): Promise<Response> {
         try {
-              const doc = request.file?.path ?? '';
-              const { name, email, banking_account } = request.body;
+              const doc = request.file?.filename ?? '';
+              const { name, email, banking_account,
+                      info, phone, address  
+                    } = request.body;
               const pharmacy = await this.pharmacyUseCase.run({
-                      name, email, banking_account, doc 
+                      name, email, banking_account, doc, 
+                      info, phone, address
               })
 
               return response.status(201).json({response: pharmacy})

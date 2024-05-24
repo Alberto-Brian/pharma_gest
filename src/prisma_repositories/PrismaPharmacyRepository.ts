@@ -1,23 +1,23 @@
-import IPharmacyRepository from "@/repositories/IPharmacyRepositorio";
-import { IPharmacyRequest, IPharmacyResponse } from "@/interfaces/IPharmacy";
-import prisma from "@/utils/prisma";
-import { ResultPaginated } from "@/utils/Pagination";
-import IResultPaginated from "@/interfaces/IResultPaginated";
+import IPharmacyRepository from "../repositories/IPharmacyRepositorio";
+import { IPharmacyRequest, IPharmacyResponse } from "../interfaces/IPharmacy";
+import prisma from "../utils/prisma";
+import { ResultPaginated } from "../utils/Pagination";
+import IResultPaginated from "../interfaces/IResultPaginated";
 
 export default class PrismaPharmacyRepository implements IPharmacyRepository {
     async createPharmacy(data: IPharmacyRequest): Promise<IPharmacyResponse | Error>{
             const pharmacy = await prisma.pharmacy.create({
-                data,
-                select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    status: true,
-                    doc: true,
-                    banking_account: true,
-                    created_at: true,
-                    updated_at: true
-                }
+                data
+                // select: {
+                //     id: true,
+                //     name: true,
+                //     email: true,
+                //     status: true,
+                //     doc: true,
+                //     banking_account: true,
+                //     created_at: true,
+                //     updated_at: true
+                // }
             })
             
             return pharmacy
