@@ -1,6 +1,7 @@
 import { Router, response } from "express"; 
 import CreatePharmacyFactory from "../CreatePharmacy/CreatePharmacyFactory";
 import ReadAllPharmaciesFactory from "../ReadAllPharmacies/ReadAllPharmaciesFactory";
+import ReadAllPendingPharmaciesFactory from "../ReadAllPendingPharmacies/ReadAllPendingPharmaciesFactory";
 import ReadAllDeletedPharmaciesFactory from "../ReadAllDeletedPharmacies/ReadAllDeletedPharmaciesFactory";
 import DeletePharmacyFactory from "../DeletePharmacy/DeletePharmacyFactory";
 import uploadD from "../../../middlewares/multerDocs";
@@ -17,7 +18,10 @@ pharmacyRoutes.route('/create')
     .post(uploadD.single('doc'),(request, response) => { return CreatePharmacyFactory().handler(request, response)});
 
 pharmacyRoutes.route('/read')
-    .get((request, response) => {return ReadAllPharmaciesFactory().handler(request, response)})    
+    .get((request, response) => {return ReadAllPharmaciesFactory().handler(request, response)})
+    
+pharmacyRoutes.route('/read/pending')
+    .get((request, response) => {return ReadAllPendingPharmaciesFactory().handler(request, response)})
 
 pharmacyRoutes.route('/readAllDeleted')
     .get((request, response) => {return ReadAllDeletedPharmaciesFactory().handler(request, response)})    

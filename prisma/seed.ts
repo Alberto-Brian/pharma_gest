@@ -5,6 +5,28 @@ async function main(){
     await prisma.business_man.createMany({
         data: [
             { 
+                username: 'Alberto Brian',
+                email: 'albertobrian@gmail.com',
+                password: hasPassword('brian'),
+                address: 'Viana/Capalanga',
+                phone: '932047303',
+                birthdate: new Date('2020-10-10'),
+                gender: 'Masculino'
+
+            },
+
+            { 
+                username: 'Alfredo Massanza',
+                email: 'alfredonsoki@gmail.com',
+                password: hasPassword('freddy'),
+                address: 'Nóqui/sede',
+                phone: '932847333',
+                birthdate: new Date('2020-10-10'),
+                gender: 'Masculino'
+
+            }, 
+
+            { 
                 username: 'Filipe João',
                 email: 'filipe@gmail.com',
                 password: hasPassword('filipe'),

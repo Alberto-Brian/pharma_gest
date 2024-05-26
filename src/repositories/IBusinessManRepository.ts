@@ -3,7 +3,7 @@ import { IBusinessManRequest, IBusinessManResponse, ICreatedBusinessManResponse 
 
 
 export default interface IBusinessManRepository {
-    createBusinessMan: (data: IBusinessManRequest) => Promise<ICreatedBusinessManResponse | Error>;
+    createBusinessMan: (data: IBusinessManRequest, id_pharmacy: string) => Promise<ICreatedBusinessManResponse | Error>;
     readAllBusinessMen: (page: number, perPage: number) => Promise<IResultPaginated>;
     readAllDeletedBusinessMen: (page: number, perPage: number) => Promise<IResultPaginated>;
     findByEmail: (email: string) => Promise<IBusinessManResponse | null>;

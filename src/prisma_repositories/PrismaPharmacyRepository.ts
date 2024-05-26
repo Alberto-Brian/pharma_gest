@@ -28,7 +28,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
                 where: {
                     deleted_at: null,
                     deleted_by: '',
-                    status: false
+                    status: true
                 }
             })
 
@@ -36,12 +36,24 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
             return result;
     }
 
+    async readPendingPharmacies(page: number, perPage: number): Promise<IResultPaginated>{
+        const pharmacies = await prisma.pharmacy.findMany({
+            where: {
+                deleted_at: null,
+                deleted_by: '',
+                status: false
+            }
+        })
+
+        const result = ResultPaginated(pharmacies, page, perPage);
+        return result;
+    }
+
     async readAllDeletedPharmacies(page: number, perPage: number): Promise<IResultPaginated>{
         const pharmacies = await prisma.pharmacy.findMany({
             where: {
                 deleted_at:{ not: null },
-                deleted_by: { not: '' },
-                status: { not: false }
+                deleted_by: { not: '' }
             }
         })
 

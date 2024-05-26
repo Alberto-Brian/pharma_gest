@@ -7,15 +7,27 @@ import { ResultPaginated } from '../utils/Pagination';
 
 export default class PrismaBusinessManRepository implements BusinessManRepository{
 
-    async createBusinessMan(data: IBusinessManRequest): Promise<ICreatedBusinessManResponse | Error>{
+    async createBusinessMan(data: IBusinessManRequest, id_pharmacy: string): Promise<ICreatedBusinessManResponse | Error>{
 
         const user_data = await prisma.business_man.create({
             data: {
                 username: data.username,
                 email: data.email,
                 password: hasPassword(data.password),
+                pharmacy: {
+                    connect: {
+                        id: id_pharmacy
+                    }
+                }
             }
         })
+
+        if(user_data){
+             await prisma.pharmacy.update({
+                where:{ id: id_pharmacy},
+                data:{ status: true}
+             });
+        }
 
         return user_data;
     }
