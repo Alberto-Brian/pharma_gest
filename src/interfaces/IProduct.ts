@@ -28,7 +28,7 @@ export interface IProductResponse extends IBase {
     price: number
     image: string
     description: string | null
-    id_pharmacy: string
+    // id_pharmacy: string | null
     id_category: string
 }
 

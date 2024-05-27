@@ -23,6 +23,6 @@ userRoutes.route('/delete/:id/deletedBy/:user')
     .get((request, response) => {return DeleteUserFactory().handler(request, response)})
 
 userRoutes.route('/readAllDeleted')
-    .get((request, response) => { return ReadAllDeletedUsersFactory().handler(request, response)})
+    .delete((request, response) => { return ReadAllDeletedUsersFactory().handler(request, response)})
     
     

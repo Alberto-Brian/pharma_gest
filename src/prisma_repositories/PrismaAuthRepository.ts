@@ -21,7 +21,7 @@ export default class PrismaAuthRepository implements IAuthRepository{
                     phone: true, 
                     address: true, 
                     avatar: true, 
-                    created_at: true,
+                    created_at: false,
                     updated_at: false,
                     deleted_at: false,
                     deleted_by: false

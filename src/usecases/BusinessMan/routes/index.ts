@@ -15,15 +15,15 @@ businessManRoutes.route('/read')
     .get(ensuredAuthenticated(), (request, response) => { return ReadAllBusinessMenFactory().handler(request, response)});    
 
 businessManRoutes.route('/findByEmail/:email')
-    .get((request, response) => {return FindByEmailBusinessManFactory().handler(request, response)})
+    .get(ensuredAuthenticated(),(request, response) => {return FindByEmailBusinessManFactory().handler(request, response)})
  
 businessManRoutes.route('/findById/:id') 
-    .get((request, response) => {return FindByIdBusinessManFactory().handler(request, response)})
+    .get(ensuredAuthenticated(), (request, response) => {return FindByIdBusinessManFactory().handler(request, response)})
 
 businessManRoutes.route('/delete/:id/deletedBy/:user') 
-    .get((request, response) => {return DeleteBusinessManFactory().handler(request, response)})
+    .get(ensuredAuthenticated(), (request, response) => {return DeleteBusinessManFactory().handler(request, response)})
 
 businessManRoutes.route('/readAllDeleted')
-    .get((request, response) => { return ReadAllDeletedBusinessMenFactory().handler(request, response)})
+    .get(ensuredAuthenticated(), (request, response) => { return ReadAllDeletedBusinessMenFactory().handler(request, response)})
     
     

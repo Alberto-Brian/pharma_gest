@@ -1,7 +1,7 @@
 import IProductRepository from '../../../repositories/IProductRepository';
 import IResultPaginated from '../../../interfaces/IResultPaginated';
 import IPharmacyRepository from '../../../repositories/IPharmacyRepositorio';
-export default class FindByPharmacyProduct {
+export default class FindByPharmacyProductUseCase {
     constructor(
         private productRepository: IProductRepository,
         private pharmacyRepository: IPharmacyRepository

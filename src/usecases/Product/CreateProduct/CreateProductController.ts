@@ -9,7 +9,9 @@ export default class CreateProductController {
     async handler(request: Request, response: Response): Promise<Response>{
         try{    
             const image = request.file?.filename ?? '';
-            const { name, price, old_price, id_pharmacy, id_category, description } = request.body
+            const price = parseFloat(request.body.price as string);
+            const old_price = parseFloat(request.body?.old_price as string);
+            const { name, id_pharmacy, id_category, description } = request.body
             const result = await this.productUseCase.run({
                 name, price, old_price, id_pharmacy, id_category, image, description
             })

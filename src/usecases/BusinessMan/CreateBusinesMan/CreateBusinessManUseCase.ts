@@ -10,6 +10,10 @@ export default class CreateBusinessManUseCase {
             throw new Error("Fill all mandatory fields!!")
         }
         
+        if(!validator.isEmail(user_data.email)){
+                    throw new Error('Invalid Email!!')
+        }    
+         
         if(!id_pharmacy) {
             throw new Error("Pharmacy not selected")
         }
@@ -19,9 +23,6 @@ export default class CreateBusinessManUseCase {
             throw new Error('user already exists!!');
         }
         
-        if(!validator.isEmail(user_data.email)){
-                    throw new Error('Invalid Email!!')
-                }     
         
         const response = await this.userRepository.createBusinessMan(user_data, id_pharmacy);
         return response;

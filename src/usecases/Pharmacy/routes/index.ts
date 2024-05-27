@@ -4,8 +4,8 @@ import ReadAllPharmaciesFactory from "../ReadAllPharmacies/ReadAllPharmaciesFact
 import ReadAllPendingPharmaciesFactory from "../ReadAllPendingPharmacies/ReadAllPendingPharmaciesFactory";
 import ReadAllDeletedPharmaciesFactory from "../ReadAllDeletedPharmacies/ReadAllDeletedPharmaciesFactory";
 import DeletePharmacyFactory from "../DeletePharmacy/DeletePharmacyFactory";
-import uploadD from "../../../middlewares/multerDocs";
-import uploadI from "../../../middlewares/multerImages";
+import uploadD from "../../../middlewares/multer/multerDocs";
+// import uploadI from "../../../middlewares/multer/multerImages";
 
 import { ensuredAuthenticated } from "../../../middlewares/auth";
 

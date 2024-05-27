@@ -3,13 +3,30 @@ import IResultPaginated from '../interfaces/IResultPaginated';
 import { ResultPaginated } from '../utils/Pagination';
 import { IProductRequest, IProductResponse } from '@/interfaces/IProduct';
 import prisma from '../utils/prisma';
+import { connect } from 'http2';
+import { createConnection } from 'net';
+import { strict } from 'assert';
+import { Pharmacy, Product } from '@prisma/client';
+import { disconnect } from 'process';
+import { unitOfTime } from 'moment';
 
 export default class PrismaProductRepository implements IProductRepository{
     async createProduct(data: IProductRequest): Promise<IProductResponse | Error>{
-        const product = await prisma.product.create({
-            data
-        })
 
+        const product = await prisma.product.create({
+            data: {
+                name: data.name,
+                price: data.price,
+                image: data.image,
+                description: data.description,
+                pharmacy: { 
+                    connect: { id: data.id_pharmacy },
+                },
+                category: {
+                    connect: { id: data.id_category },  
+                 }
+            } 
+        })
         return product
     }
 
@@ -53,7 +70,19 @@ export default class PrismaProductRepository implements IProductRepository{
 
     async findByIdProduct(id: string): Promise<IProductResponse | null> {
         const product = await prisma.product.findUnique({
-            where: { id }
+            where: { id },
+            select: {
+                id: true,
+                name: true,
+                price: true,
+                image: true,
+                description: true,
+                id_pharmacy: true,
+                id_category: true,
+                created_at: true,
+                updated_at: true
+            }
+
         })
 
         return product ?? null
@@ -61,7 +90,18 @@ export default class PrismaProductRepository implements IProductRepository{
 
     async findByNameProduct(name: string): Promise<IProductResponse | null> {
         const product = await prisma.product.findFirst({
-            where: { name }
+            where: { name },
+            select: {
+                id: true,
+                name: true,
+                price: true,
+                image: true,
+                description: true,
+                id_pharmacy: true,
+                id_category: true,
+                created_at: true,
+                updated_at: true
+            }
         })
 
         return product ?? null
