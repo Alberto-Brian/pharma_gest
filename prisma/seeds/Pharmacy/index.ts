@@ -1,9 +1,10 @@
 import prisma from '../../../src/utils/prisma';
 import random from '../Services/Random'
+import seed_service from '../Services/Selection';
 const db = prisma.pharmacy;
-export default async function seed(): Promise<Object[]> {
-     await db.createMany({
-        data: [
+
+export default async function seed(first_time: boolean = false): Promise<Object[]> {
+        const seed_data = [
             {
                 name: 'Mypharma',
                 email: 'mypharam.geral@gmail.com',
@@ -74,11 +75,14 @@ export default async function seed(): Promise<Object[]> {
                 doc: 'default doc'
             },
         ]
-     })
+
+    if(first_time) await db.createMany({ data: seed_data });
+    if(!first_time){ const busineess_man_seed = seed_service(db, seed_data);}
 
     const  pharmacies = await db.findMany({ 
         select: { id: true},
         // where: {created_at: new Date()} 
     });
+
     return pharmacies;
 }

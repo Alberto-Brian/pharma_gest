@@ -1,6 +1,6 @@
 import prisma from "../../src/utils/prisma";
 import reset from "./Services/Reset";
-import business_man_seed from './Business_man'; 
+import busineess_man_seed from './Business_man'; 
 import pharmacy_seed from './Pharmacy';
 import category_seed from './Category';
 import product_seed from './Product';
@@ -10,15 +10,15 @@ import nationality_seed from './Nationality';
 async function main(){
 
     /* RESET BD*/
-    // await reset();
+    await reset();
 
     /* SET BD */  
-    const social_networks_id = await social_network_seed();
-    const nationalities_id = await nationality_seed();  
-    const categories_id = await category_seed();
-    const pharmacies_id = await pharmacy_seed();
-    const business_men_id = await business_man_seed();
-    const products_id =  await product_seed(pharmacies_id, categories_id);
+    const social_networks_id = await social_network_seed(true);
+    const nationalities_id = await nationality_seed(true);  
+    const categories_id = await category_seed(true);
+    const pharmacies_id = await pharmacy_seed(true);
+    const business_men_id = await busineess_man_seed(true);
+    const products_id =  await product_seed(pharmacies_id, categories_id, true);
 
     return {
         social_networks_id,
@@ -35,7 +35,7 @@ main()
     .then(async (response) => {
         await prisma.$connect();
         console.log("executado com sucesso!!")
-        // response && console.log(response)
+        response && console.log(response)
     })
     .catch(async (error: any) => {
         console.log(error);

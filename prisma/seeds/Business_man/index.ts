@@ -5,7 +5,7 @@ import seed_service from '../Services/Selection';
 import connect from "../Services/Connect";
 
 const db = prisma.business_man;
-export default async function seed(): Promise<Object[]>{
+export default async function seed(first_time: boolean = false): Promise<Object[] | void>{
 
     const seed_data = [
         { 
@@ -86,19 +86,23 @@ export default async function seed(): Promise<Object[]>{
 
     ]
 
-        const busineess_man_seed = seed_service(db, seed_data);
+
+    if(first_time) await db.createMany({ data: seed_data });
+    if(!first_time){ const busineess_man_seed = seed_service(db, seed_data
+        // business_man, pharmacies
+    );}
         // reset();
 
     const business_man = await prisma.business_man.findMany();
     const pharmacies = await prisma.pharmacy.findMany();
 
     /* Relational connections*/
-    // connect(business_man, pharmacies, db, true);
+    connect(business_man, pharmacies, db, true);
     // connect();
 
 
     const  business_men_ = await db.findMany({ select: { id: true} });
 
-    return busineess_man_seed;
-
+    if(first_time)
+    return business_men_;
 }

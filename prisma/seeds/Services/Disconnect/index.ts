@@ -1,3 +1,4 @@
+import { disconnect } from "process"
 
 type myObject = {
     id: string
@@ -15,7 +16,7 @@ export default async function connect(first_array: myObject[],
         data: {
             status: status,
             pharmacy: {
-                connect: {
+                disconnect: {
                     id: second_array[pharma].id
                 }
             }
