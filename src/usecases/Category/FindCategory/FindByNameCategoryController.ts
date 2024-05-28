@@ -8,7 +8,7 @@ export default class FindByNameCategoryController{
 
     async handler(request: Request, response: Response): Promise <Response> {
         try {
-             const { name } = request.params;
+             const { name } = request.body;
              const category = await this.categoryUseCase.run(name);
              return response.status(201).json({ category })
         } catch (error: any) {

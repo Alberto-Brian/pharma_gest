@@ -15,6 +15,6 @@ categoryRoutes.route('/read')
 categoryRoutes.route('/find')
     .get((request, response) => { return FindByNameCategoryFactory().handler(request, response)} )
 
-categoryRoutes.route('/delete')
+categoryRoutes.route('/delete/:id')
     .delete((request, response) => { return DeleteCategoryFactory().handler(request, response)} )
 

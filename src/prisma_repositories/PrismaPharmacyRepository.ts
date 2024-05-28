@@ -98,6 +98,24 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
 
     }
 
+    async findByIdPendingPharmacy(id: string): Promise<IPharmacyResponse | null>{
+        const pharmacy = await prisma.pharmacy.findFirst({
+            where: { id, status: false },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                status: true,
+                doc: true,
+                banking_account: true,
+                created_at: true,
+                updated_at: true
+            }
+        })
+        return pharmacy
+    }
+
+
     async delete(id: string, user: string): Promise<void>{
          await prisma.pharmacy.update({
             where: { id },
