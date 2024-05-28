@@ -1,6 +1,7 @@
 import prisma from "../../../src/utils/prisma"
 import { hasPassword } from "../../../src/utils/bcrypt";
 import reset from "../Services/Reset";
+import seed_service from '../Services/Selection';
 import connect from "../Services/Connect";
 
 const db = prisma.business_man;
@@ -85,33 +86,19 @@ export default async function seed(): Promise<Object[]>{
 
     ]
 
-       //Selecting only seed data info
-       const business_men_id: Object[] = []
-       for(const one of seed_data){
-           const instance = await db.findUnique({ 
-               select: { id: true},
-               where: { email: one.email  } 
-           }) as Object
-   
-           business_men_id.push(instance)
-       }
-
-
-    // clean only seed info on table business_man before reset it
-        // reset(db, business_men_id);
-
-    await db.createMany({ data: seed_data })
+        const busineess_man_seed = seed_service(db, seed_data);
+        // reset();
 
     const business_man = await prisma.business_man.findMany();
     const pharmacies = await prisma.pharmacy.findMany();
 
     /* Relational connections*/
-    connect(business_man, pharmacies, db, true);
+    // connect(business_man, pharmacies, db, true);
     // connect();
 
 
     const  business_men_ = await db.findMany({ select: { id: true} });
 
-    return business_men_;
+    return busineess_man_seed;
 
 }

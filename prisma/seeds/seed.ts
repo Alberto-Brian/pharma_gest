@@ -10,23 +10,23 @@ import nationality_seed from './Nationality';
 async function main(){
 
     /* RESET BD*/
-    await reset();
+    // await reset();
 
     /* SET BD */  
-    const social_networks_id = await social_network_seed();
-    const nationalities_id = await nationality_seed();  
-    const categories_id = await category_seed();
-    const pharmacies_id = await pharmacy_seed();
+    // const social_networks_id = await social_network_seed();
+    // const nationalities_id = await nationality_seed();  
+    // const categories_id = await category_seed();
+    // const pharmacies_id = await pharmacy_seed();
     const business_men_id = await busineess_man_seed();
-    const products_id =  await product_seed(pharmacies_id, categories_id);
+    // const products_id =  await product_seed(pharmacies_id, categories_id);
 
     return {
-        social_networks_id,
-        nationalities_id,
-        categories_id,
-        pharmacies_id,
+        // social_networks_id,
+        // nationalities_id,
+        // categories_id,
+        // pharmacies_id,
+        // products_id
         business_men_id,
-        products_id
     };
 }
 
