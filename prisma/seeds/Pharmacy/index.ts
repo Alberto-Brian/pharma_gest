@@ -76,6 +76,9 @@ export default async function seed(): Promise<Object[]> {
         ]
      })
 
-    const  pharmacies = await db.findMany({ select: { id: true } });
+    const  pharmacies = await db.findMany({ 
+        select: { id: true},
+        // where: {created_at: new Date()} 
+    });
     return pharmacies;
 }

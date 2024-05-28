@@ -1,7 +1,7 @@
 import prisma from '../../../src/utils/prisma'
 import random_ids from '../Services/Random';
 const db = prisma.product;
-export default async function seed(pharmacies: Object[], categories: Object[]): Promise<void>{
+export default async function seed(pharmacies: Object[], categories: Object[]): Promise<Object[]>{
     await db.createMany({
         data:[
             {
@@ -23,4 +23,11 @@ export default async function seed(pharmacies: Object[], categories: Object[]): 
             }
         ]
     })
+
+
+    const  products_id = await db.findMany({ 
+        select: { id: true},
+        // where: {created_at: new Date()} 
+    });
+    return products_id;
 }
