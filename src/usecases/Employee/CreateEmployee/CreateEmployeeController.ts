@@ -5,7 +5,7 @@ export default class CreateEmployeeController {
     constructor(
         private employeeUseCase: CreateEmployeeUseCase
     ){}
-    async handler(request: Request, response: Response): Promise<Response>{
+    async handler(request: Request, response: Response): Promise<Response>{ 
         try {
                 const {username, email, password, id_pharmacy} = request.body;
                 const result = await this.employeeUseCase.run({
@@ -15,7 +15,7 @@ export default class CreateEmployeeController {
         } catch (error: any) {
             return response.status(500).json({
                 error: error?.message || "Unexpected error"
-})
-}
-}
+            })
+        }
+    }
 }

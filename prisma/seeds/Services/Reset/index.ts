@@ -7,6 +7,7 @@ export default async function reset(db?: any, data?: Object[]): Promise<void> {
     await prisma.category.deleteMany({});
     await prisma.nationality.deleteMany({});
     await prisma.social_networks.deleteMany({});
+    await prisma.employee.deleteMany({});
 
     // console.log('aqui...')
     // if(data && db){

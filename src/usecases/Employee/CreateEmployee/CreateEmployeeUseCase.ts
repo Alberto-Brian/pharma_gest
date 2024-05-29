@@ -2,8 +2,6 @@ import IEmployeeRepository from "../../../repositories/IEmployeeRepository";
 import { IEmployeeCreateRequest, IEmployeeCreateResponse } from "../../../interfaces/IEmployee";
 import IPharmacyRepository from "../../../repositories/IPharmacyRepositorio"; 
 import validator from "validator";
-import { threadId } from "worker_threads";
-import { PassThrough } from "stream";
 
 export default class CreateEmployeeUseCase {
     constructor(

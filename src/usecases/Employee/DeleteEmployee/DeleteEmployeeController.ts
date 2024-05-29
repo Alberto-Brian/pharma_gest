@@ -14,7 +14,7 @@ export default class DeleteEmployeeController {
         } catch (error: any) {
             return response.status(500).json({
                 error: error?.message || "Unexpected error"
-})
-}
-}
+        })
+    }
+  }
 }

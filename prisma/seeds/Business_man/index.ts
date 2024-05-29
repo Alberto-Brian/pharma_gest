@@ -85,33 +85,21 @@ export default async function seed(): Promise<Object[]>{
 
     ]
 
-       //Selecting only seed data info
-       const business_men_id: Object[] = []
-       for(const one of seed_data){
-           const instance = await db.findUnique({ 
-               select: { id: true},
-               where: { email: one.email  } 
-           }) as Object
-   
-           business_men_id.push(instance)
-       }
 
-
-    // clean only seed info on table business_man before reset it
-        // reset(db, business_men_id);
 
     await db.createMany({ data: seed_data })
 
     const business_man = await prisma.business_man.findMany();
     const pharmacies = await prisma.pharmacy.findMany();
+    const nationalities = await prisma.nationality.findMany();
+    const social_networks = await prisma.social_networks.findMany();
+
 
     /* Relational connections*/
     connect(business_man, pharmacies, db, true);
-    // connect();
+    // connect(business_man, nationalities, db);
+    // connect(business_man, social_networks, db);
 
-
-    const  business_men_ = await db.findMany({ select: { id: true} });
-
-    return business_men_;
+    return business_man;
 
 }

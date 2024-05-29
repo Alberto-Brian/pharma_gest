@@ -28,5 +28,7 @@ export default async function connect(first_array: myObject[] ,
             data: {status: true}
          })
     }
+
+    // if(pharma = 0) break
 }
 }
