@@ -1,3 +1,4 @@
+import prisma from "../../../../src/utils/prisma"
 
 type myObject = {
     id: string
@@ -13,7 +14,6 @@ export default async function connect(first_array: myObject[] ,
         },
 
         data: {
-            status: status,
             pharmacy: {
                 connect: {
                     id: second_array[pharma].id
@@ -21,5 +21,12 @@ export default async function connect(first_array: myObject[] ,
             }
         }
     })
+
+    if(status){
+        await prisma.pharmacy.update({
+            where: { id: second_array[pharma].id },
+            data: {status: true}
+         })
+    }
 }
 }

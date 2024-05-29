@@ -11,3 +11,10 @@ export default interface IProductRepository {
     findByCategoryProducts: (id_category: string, page: number, perPage: number) => Promise<IResultPaginated>
     deleteProduct: (id: string, user: string) => Promise<void>
 }
+
+//TO DO LIST 
+
+/*
+    set expiration date attribute
+
+*/

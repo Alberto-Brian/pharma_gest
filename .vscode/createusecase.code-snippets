@@ -1,0 +1,22 @@
+
+{
+	"Create UseCase": {
+		"scope": "javascript,typescript",
+		"prefix": "cv",
+		"body": [
+"import $1Repository from \"../../../repositories/$1Repository\";",
+"import { $2, $3 } from \"../../../interfaces/$4\";\n",
+
+"export default class $TM_FILENAME_BASE {",
+    "\tconstructor(",
+      "\t\tprivate $5Repository: $1Repository",
+"    ){}\n",
+   " async run(data: $2): Promise<$3>{\n",
+        "\t\tconst $5 = await this.$5Repository$7",
+		"\t\treturn $5",
+"    }",
+"}"
+		],
+		"description": "Log output to console"
+	}
+}
