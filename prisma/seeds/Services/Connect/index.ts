@@ -4,7 +4,7 @@ type myObject = {
     id: string
 }
 
-export default async function connect(first_array: myObject[] , 
+export default async function connect(first_array: myObject[], 
     second_array: myObject[], db: any, status: boolean = false ): Promise<void>{
     for(let man = 0, pharma = 0; man < first_array.length,
         pharma < second_array.length; man++, pharma++ ){
@@ -29,6 +29,6 @@ export default async function connect(first_array: myObject[] ,
          })
     }
 
-    // if(pharma = 0) break
+    if(pharma == 6) return
 }
 }

@@ -18,9 +18,6 @@ export const ensuredAuthenticated = () => {
 
     try {
       const data = verify(token, JWT_SECRET!);
-
-      console.log('DATA: ')
-      // console.log(data)
       request.body.user = data
       return next();
     } catch (err) {

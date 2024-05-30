@@ -1,7 +1,10 @@
 import prisma from '../../../src/utils/prisma';
-import random from '../Services/Random'
+import random from '../Services/Random';
+import { hashPassword } from "../../../src/utils/bcrypt";
+
 const db = prisma.employee;
 import connect from "../Services/Connect";
+
 
 
 export default async function seed(): Promise<Object[]> {
@@ -9,7 +12,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "António Domingos Júnior",
                 email: "domingos@gmail.com",
-                password: "domi",
+                password: hashPassword("domi"),
                 address: 'Sambizanga',
                 phone: "932-986-567",
                 birthdate: new Date(),
@@ -21,7 +24,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Anselmo Da Silva Jota",
                 email: "anselmo@gmail.com",
-                password: "anselmo",
+                password: hashPassword("anselmo"),
                 address: 'Talatona',
                 phone: "934-777-609",
                 birthdate: new Date(),
@@ -32,7 +35,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Tânia Francisca Domingos",
                 email: "taniadomingos@gmail.com",
-                password: "tania",
+                password: hashPassword("tania"),
                 address: 'Projecto nova vida',
                 phone: "922-645-005",
                 birthdate: new Date(),
@@ -43,7 +46,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Elisandra Beatriz Matos",
                 email: "beatriz@gmail.com",
-                password: "domi",
+                password: hashPassword("domi"),
                 address: 'Sambizanga',
                 phone: "942-2480-570",
                 birthdate: new Date(),
@@ -53,7 +56,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Bernadeth José Emiliana",
                 email: "emiliana@gmail.com",
-                password: "emmy",
+                password: hashPassword("emmy"),
                 address: 'Sambizanga',
                 phone: "945-126-639",
                 birthdate: new Date(),
@@ -64,7 +67,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Edvânia Cristina dos Santos",
                 email: "cristina@gmail.com",
-                password: "edvania",
+                password: hashPassword("edvania"),
                 address: 'Calemba II',
                 phone: "911-945-511",
                 birthdate: new Date(),
@@ -75,7 +78,7 @@ export default async function seed(): Promise<Object[]> {
             {
                 username: "Jeovánia Josefa Joana",
                 email: "jjj3@gmail.com",
-                password: "jjj",
+                password: hashPassword("jjj"),
                 address: 'Calemba II',
                 phone: "911-923-521",
                 birthdate: new Date(),

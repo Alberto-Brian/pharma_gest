@@ -19,14 +19,16 @@
 				"\t){}",
 				"\tasync handler(request: Request, response: Response): Promise<Response>{",
 					"\t\ttry {",
-						  "\t\t\t\tconst {$3} = request.body;\n\n",
+						  "\t\t\t\tconst {$3} = request.body;",
+						  "\t\t\t\tconst result = await this.$2UseCase.run($4)",
+						  "\t\t\t\treturn response.status(200).json({result})\n",
 						
 					"\t\t} catch (error: any) {",
 						"\t\t\treturn response.status(500).json({",
 							"\t\t\t\terror: error?.message || \"Unexpected error\"",
-						"})",
-					"}",
-				"}",
+						"\t\t\t})",
+					"\t\t}",
+				"\t}",
 			"}"
 		],
 		"description": "Log output to console"

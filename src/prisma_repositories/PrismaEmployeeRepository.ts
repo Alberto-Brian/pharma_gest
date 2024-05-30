@@ -1,7 +1,10 @@
 import prisma from "../utils/prisma";
-import { hasPassword } from "../utils/bcrypt";
-import { ResultPaginated } from "../utils/Pagination";
 import IResultPaginated from "../interfaces/IResultPaginated";
+import jwt from 'jsonwebtoken';
+
+import { hashPassword, comparePassword } from "../utils/bcrypt";
+import { ResultPaginated } from "../utils/Pagination";
+import { JWT_SECRET } from "../core";
 
 import IEmployee, { 
     IEmployeeCreateRequest,
@@ -13,16 +16,54 @@ import IEmployee, {
     IEmployeeUpdateCredentialsRequest,
     IEmployeeUpdateCredentialsResponse
 } from "../interfaces/IEmployee";
+import { PassThrough } from "stream";
 
 const db = prisma.employee;
 export default class PrismaEmployeeRepository {
+
+    async sigin(email: string, password: string): Promise<any>{
+
+        const user = await db.findUnique({
+            select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                    password: true, 
+                    status: true,
+                    phone: true, 
+                    address: true, 
+                    avatar: true, 
+                    created_at: false,
+                    updated_at: false,
+                    deleted_at: false,
+                    deleted_by: false
+            },
+            where: {
+                    email: email
+            }
+        })
+
+
+        if(!comparePassword(password, user?.password ?? '')){
+            throw new Error("Incorrect password, please try again!!")
+        }
+
+        const token = jwt.sign(user as object, JWT_SECRET ?? "mysecret",
+                               { expiresIn: "10d"});
+        return {
+             user,
+             token
+        }
+    }
+
+
     async create(data: IEmployeeCreateRequest, id_pharmacy: string)
     : Promise<IEmployeeCreateResponse> {
         const employee = await db.create({ 
             data: {
                 username: data.username,
                 email: data.email,
-                password: hasPassword(data.password),
+                password: hashPassword(data.password),
                 pharmacy: {
                     connect: { id: id_pharmacy}
                 }
@@ -39,7 +80,10 @@ export default class PrismaEmployeeRepository {
             }
         })
         
-        return employee
+        const token = jwt.sign(employee as object, JWT_SECRET ?? "mysecret",
+        { expiresIn: "10d"});
+
+        return {user: employee, token}
     }
 
     async read(page: number, perPage: number): Promise<IResultPaginated> {
@@ -124,7 +168,10 @@ export default class PrismaEmployeeRepository {
     async updateCredentials(data: IEmployeeUpdateCredentialsRequest, id: string)
     : Promise<IEmployeeUpdateCredentialsResponse> {
         const employee_credentials = db.update({
-            data,
+            data: {
+                email: data.email,
+                password: hashPassword(data.password)
+            },
             where: { id },
             select: {
                 id: true,

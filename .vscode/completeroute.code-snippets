@@ -10,7 +10,7 @@
 		"scope": "javascript,typescript",
 		"prefix": "miniroute",
 		"body": [
-			"$1Routes.route('/$2')",
+			"$1.route('/$2')",
     		".$3((request, response) => {return $4Factory().handler(request, response)})"
 		],
 		"description": "Log output to console"

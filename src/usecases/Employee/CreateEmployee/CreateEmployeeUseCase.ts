@@ -10,11 +10,12 @@ export default class CreateEmployeeUseCase {
 
     ){}
 
- async run(data: IEmployeeCreateRequest, id_pharmacy: string): Promise<IEmployeeCreateResponse>{
+ async run(data: IEmployeeCreateRequest, id_pharmacy: string, confirm_password: string): Promise<IEmployeeCreateResponse>{
 
         const pharmacyExists = await this.pharmacyRepository.findById(id_pharmacy);
         
-        if(!data.username || !data.email || !data.password || !id_pharmacy){
+        if(!data.username || !data.email || !data.password || 
+           !id_pharmacy ||   !confirm_password){
             throw new Error('Fill all mandatory fields!!');
         }
 
@@ -22,6 +23,10 @@ export default class CreateEmployeeUseCase {
             throw new Error('Invalid email!!');
         }
         
+        if(data.password !== confirm_password){
+            throw new Error('Passwords do not match. Please try again');
+        }
+
         if(!pharmacyExists){
             throw new Error('Pharmacy not exists!!');
         }

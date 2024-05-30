@@ -1,6 +1,6 @@
 import bcrypt  from 'bcrypt';
 
-export function hasPassword(password: string): string {
+export function hashPassword(password: string): string {
   try{
       return bcrypt.hashSync(password, 10);
   }catch(e: any){

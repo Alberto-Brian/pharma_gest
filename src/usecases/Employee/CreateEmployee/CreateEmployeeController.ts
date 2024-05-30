@@ -7,9 +7,9 @@ export default class CreateEmployeeController {
     ){}
     async handler(request: Request, response: Response): Promise<Response>{ 
         try {
-                const {username, email, password, id_pharmacy} = request.body;
+                const {username, email, password, id_pharmacy, confirm_password} = request.body;
                 const result = await this.employeeUseCase.run({
-                    username, email, password}, id_pharmacy);
+                    username, email, password}, id_pharmacy, confirm_password);
                 return response.status(201).json({ result });    
 
         } catch (error: any) {

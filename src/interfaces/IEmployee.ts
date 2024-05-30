@@ -25,11 +25,17 @@ export interface IEmployeeCreateRequest{
 }
 
 //CREATE ACCOUNT RESPONSE
-export interface IEmployeeCreateResponse extends IBase {
-    username: string
-    email: string
-    password: string
-    status: boolean
+export interface IEmployeeCreateResponse {
+    user: {
+        id: string
+        username: string
+        email: string
+        password: string
+        status: boolean,
+        created_at: Date,
+        updated_at: Date
+    },
+    token: string
 }
 
 

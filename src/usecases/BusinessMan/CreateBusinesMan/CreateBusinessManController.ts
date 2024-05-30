@@ -8,10 +8,10 @@ export default class CreateBusinessManController {
 
     async handler(request: Request, response: Response): Promise<Response>{
         try {
-            const {username, email, password, id_pharmacy } = request.body;
+            const {username, email, password, id_pharmacy, confirm_password } = request.body;
             const responsee = await this.userEntity.run({
                 username, email, password
-            },  id_pharmacy);
+            },  id_pharmacy, confirm_password);
 
             return response.status(201).send({responsee});
         } catch (error: any) {

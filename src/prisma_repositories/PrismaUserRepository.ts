@@ -1,7 +1,7 @@
 import prisma from '../utils/prisma';
 import UserRepository from '../repositories/IUserRepository';
 import { IUserRequest, IUserResponse, IUserCreatedResponse } from '../interfaces/IUser';
-import { hasPassword } from '../utils/bcrypt';
+import { hashPassword } from '../utils/bcrypt';
 import IResultPaginated from '../interfaces/IResultPaginated';
 import { ResultPaginated } from '../utils/Pagination';
 
@@ -13,7 +13,7 @@ export default class PrismaUserRepository implements UserRepository{
             data: {
                 username: data.username,
                 email: data.email,
-                password: hasPassword(data.password),
+                password: hashPassword(data.password),
                
             }
         })

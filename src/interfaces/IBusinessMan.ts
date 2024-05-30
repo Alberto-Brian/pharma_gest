@@ -24,11 +24,15 @@ export interface IBusinessManResponse extends IBase{
 }
 
 export interface ICreatedBusinessManResponse {
+   user: {
     id: string,
     username: string,
     email: string,
     status: boolean,
     created_at: Date,
+    },
+    token: string,
+
 }
 
 

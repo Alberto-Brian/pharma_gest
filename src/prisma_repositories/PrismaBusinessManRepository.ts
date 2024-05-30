@@ -1,24 +1,71 @@
 import prisma from '../utils/prisma';
 import BusinessManRepository from '../repositories/IBusinessManRepository';
-import { hasPassword } from '../utils/bcrypt';
-import { IBusinessManRequest, IBusinessManResponse, ICreatedBusinessManResponse } from '../interfaces/IBusinessMan';
 import IResultPaginated from '../interfaces/IResultPaginated';
+import jwt from 'jsonwebtoken';
+
+import { hashPassword, comparePassword } from '../utils/bcrypt';
+import { JWT_SECRET } from "../core";
+import { IBusinessManRequest, IBusinessManResponse, ICreatedBusinessManResponse } from '../interfaces/IBusinessMan';
 import { ResultPaginated } from '../utils/Pagination';
 
 export default class PrismaBusinessManRepository implements BusinessManRepository{
 
+    async sigin(email: string, password: string): Promise<any>{
+
+        const user = await prisma.business_man.findUnique({
+            select: {
+                    id: true,
+                    username: true,
+                    email: true,
+                    password: true, 
+                    status: true,
+                    phone: true, 
+                    address: true, 
+                    avatar: true, 
+                    created_at: false,
+                    updated_at: false,
+                    deleted_at: false,
+                    deleted_by: false
+            },
+            where: {
+                    email: email
+            }
+        })
+
+        if(!comparePassword(password, user?.password ?? '')){
+            throw new Error("Incorrect password, please try again!!")
+        }
+
+        const token = jwt.sign(user as object, JWT_SECRET ?? "mysecret",
+                               { expiresIn: "10d"});
+        return {
+             user,
+             token
+        }
+    }
+
     async createBusinessMan(data: IBusinessManRequest, id_pharmacy: string): Promise<ICreatedBusinessManResponse | Error>{
 
         const user_data = await prisma.business_man.create({
+            
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                password: true,
+                status: true,
+                created_at: true
+            },
             data: {
                 username: data.username,
                 email: data.email,
-                password: hasPassword(data.password),
+                password: hashPassword(data.password),
                 pharmacy: {
                     connect: {
                         id: id_pharmacy
                     }
-                }
+                },
+
             }
         })
 
@@ -29,7 +76,10 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
              });
         }
 
-        return user_data;
+        const token = jwt.sign(user_data as object, JWT_SECRET ?? "mysecret",
+        { expiresIn: "10d"});
+
+        return { user: user_data, token };
     }
 
     async readAllBusinessMen(page: number, perPage: number): Promise<IResultPaginated>{

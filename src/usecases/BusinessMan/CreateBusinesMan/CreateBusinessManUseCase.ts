@@ -9,15 +9,25 @@ export default class CreateBusinessManUseCase {
         private pharmacyRepository: IPharmacyRepository
         ){}
 
-    async run(user_data: IBusinessManRequest, id_pharmacy: string): Promise<ICreatedBusinessManResponse | Error>{
-        if(!user_data.username || !user_data.email || !user_data.password) {
+    async run(user_data: IBusinessManRequest, id_pharmacy: string, confirm_password: string): Promise<ICreatedBusinessManResponse | Error>{
+        if(!user_data.username || !user_data.email || 
+           !user_data.password || !confirm_password) {
             throw new Error("Fill all mandatory fields!!")
         }
         
+        const user = await this.userRepository.findByEmail(user_data.email)
+        if(user){
+            throw new Error('user already exists!!');
+        }
+
         if(!validator.isEmail(user_data.email)){
                     throw new Error('Invalid Email!!')
         }    
          
+        if(user_data.password !== confirm_password){
+            throw new Error('Passwords do not match. Please try again')
+        }
+
         if(!id_pharmacy) {
             throw new Error("Pharmacy not selected")
         }
@@ -33,10 +43,6 @@ export default class CreateBusinessManUseCase {
         }        
 
 
-        const user = await this.userRepository.findByEmail(user_data.email)
-        if(user){
-            throw new Error('user already exists!!');
-        }
         
         
         const response = await this.userRepository.createBusinessMan(user_data, id_pharmacy);

@@ -1,4 +1,5 @@
 import IResultPaginated from "../interfaces/IResultPaginated";
+import { ISigInResponse } from "../interfaces/IAuth";
 import IEmployee, { 
     IEmployeeCreateRequest,
     IEmployeeCreateResponse,
@@ -11,6 +12,7 @@ import IEmployee, {
 } from "../interfaces/IEmployee";
 
  export default interface IEmployeeRepository{
+    sigin: (email: string, password: string) => Promise<ISigInResponse | void>
     create: (data: IEmployeeCreateRequest, id_pharmacy: string) => Promise<IEmployeeCreateResponse>;
     read: (page: number, perPage: number) => Promise<IResultPaginated>
     readAllDeleted: (page: number, perPage: number) => Promise<IResultPaginated>
