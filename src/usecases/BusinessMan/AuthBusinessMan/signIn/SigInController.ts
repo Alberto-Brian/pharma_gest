@@ -9,7 +9,6 @@ export default class SigInController {
     async handler(request: Request, response: Response): Promise<Response>{
         try{
               const { email, password } = request.body
-              const model = request.query.model as string;
               const user = await this.sigInUseCase.run({email, password})
               return response.status(200).json({user});
         }catch(error: any){

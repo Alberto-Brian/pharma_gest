@@ -10,7 +10,7 @@ import { multe } from '../../../middlewares/multer/multerImages';
 const productRoutes = Router();
 
 productRoutes.route('/create')
-    .post(multe('./public/uploads/product_images').single('image'),
+    .post(multe('product_images').single('image'),
     (request, response) => {return CreateProuctFactory().handler(request, response)});
 
 productRoutes.route('/read')

@@ -1,5 +1,5 @@
 import IEmployeeRepository from "../../../repositories/IEmployeeRepository";
-import IEmployee from "../../../interfaces/IEmployee";
+import { IEmployee } from "../../../interfaces/IEmployee";
 import validator from "validator";
 
 export default class FindByEmailEmployeeUseCase {

@@ -11,7 +11,7 @@
 		"prefix": "miniroute",
 		"body": [
 			"$1.route('/$2')",
-    		".$3((request, response) => {return $4Factory().handler(request, response)})"
+    		"\t.$3((request, response) => {return $4().handler(request, response)})"
 		],
 		"description": "Log output to console"
 	}

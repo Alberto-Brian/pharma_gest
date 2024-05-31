@@ -26,7 +26,7 @@ export default class UpdateCredentialsEmployeesUseCase {
         const employeeExists = await this.employeeRepository.findById(id);
         if(!employeeExists){
             throw new Error('Employee does not exists')
-        } else console.log(employeeExists);
+        }
 
         if(!comparePassword(old_password, employeeExists.password)){
             throw new Error('Incorrect password');

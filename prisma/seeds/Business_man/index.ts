@@ -75,7 +75,7 @@ export default async function seed(): Promise<Object[]>{
         { 
             username: 'Albertina Jéssica Makiesse',
             email: 'albertina@gmail.com',
-            password: hashPassword('amelia'),
+            password: hashPassword('albertina'),
             address: 'Projecto nova vida',
             phone: '945843744',
             birthdate: new Date('1993-10-10'),

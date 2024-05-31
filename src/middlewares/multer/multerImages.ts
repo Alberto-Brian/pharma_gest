@@ -5,7 +5,7 @@ let uploadI = null;
 export function multe(path: string): any {
     const storage = multer.diskStorage({
         destination: (request: Request, file, cb) => {
-            cb(null, path);
+            cb(null, './public/uploads/'+path);
         },
         filename: (request: Request, file: any, cb: any) => {
             cb(null, new Date().getTime() + file.originalname);
@@ -13,9 +13,9 @@ export function multe(path: string): any {
     })
     
     const fileFilter = (request: Request, file: any, cb: any) => {
-        if(file.mimetype === 'image/jpeg'      || 
-           file.mimetype === 'image/jpg'      || 
-           file.mimetype === 'image/png'       || 
+        if(file.mimetype === 'image/jpeg'  || 
+           file.mimetype === 'image/jpg'   || 
+           file.mimetype === 'image/png'   || 
            file.mimetype === 'image/webp'){
             cb(null, true);
         } else{
@@ -28,6 +28,5 @@ export function multe(path: string): any {
     uploadI = multer({storage, limits, fileFilter});
     return uploadI
 }
- uploadI;
 
 

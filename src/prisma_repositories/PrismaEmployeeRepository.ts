@@ -6,12 +6,12 @@ import { hashPassword, comparePassword } from "../utils/bcrypt";
 import { ResultPaginated } from "../utils/Pagination";
 import { JWT_SECRET } from "../core";
 
-import IEmployee, { 
+import {
+    IEmployee, 
     IEmployeeCreateRequest,
     IEmployeeCreateResponse,
     IEmployeeUpdateRequest,
     IEmployeeUpdateResponse, 
-    IEmployeeUpdateImageRequest,
     IEmployeeUpdateImageResponse,
     IEmployeeUpdateCredentialsRequest,
     IEmployeeUpdateCredentialsResponse
@@ -148,10 +148,10 @@ export default class PrismaEmployeeRepository {
     }
 
     
-    async upadateImage(data: IEmployeeUpdateImageRequest, id: string)
+    async upadateImage(filename: string, id: string)
     : Promise<IEmployeeUpdateImageResponse> {
         const employee_image = await db.update({
-            data,
+            data: { avatar: filename },
             where: { id },
             select: {
                 id: true,

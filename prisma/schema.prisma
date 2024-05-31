@@ -41,7 +41,7 @@ model Admin {
   address         String?
   status          Boolean     @default(true)
   avatar          String?
-  birthdate       DateTime?
+  birthdate       DateTime?   @db.Date
   nationality     Nationality[]
   social_network  Social_networks[]
   permission      Permission[]
@@ -86,7 +86,7 @@ model Business_man {
   phone           String?
   address         String?
   avatar          String?
-  birthdate       DateTime?
+  birthdate       DateTime?   @db.Date
   status          Boolean     @default(true)
   pharmacy        Pharmacy[]
   nationality     Nationality[]
@@ -107,7 +107,7 @@ model User {
   phone           String?
   address         String?
   avatar          String?
-  birthdate       DateTime?
+  birthdate       DateTime?   @db.Date
   status          Boolean     @default(true)
   nationality     Nationality[]
   pharmacy        Pharmacy[]
@@ -128,7 +128,7 @@ model Employee {
   phone           String?
   address         String?
   avatar          String?
-  birthdate       DateTime?
+  birthdate       DateTime?   @db.Date
   status          Boolean     @default(true)
   nationality     Nationality[]
   pharmacy        Pharmacy[]

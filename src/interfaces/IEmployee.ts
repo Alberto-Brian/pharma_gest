@@ -1,7 +1,7 @@
 import IBase from "./IBase";
 
-//FULL REQUEST
-export default interface IEmployee extends IBase{
+//FULL RESPONSE (used to return the find requests)
+export interface IEmployee extends IBase{
     username: string
     email: string
     password: string
@@ -46,7 +46,7 @@ export interface IEmployeeUpdateRequest{
     phone: string   
     gender: string  
     address: string
-    birthdate: Date
+    birthdate: Date | null
 }
 
 //UPDATE DATE RESPONSE
@@ -75,11 +75,6 @@ export interface IEmployeeUpdateCredentialsResponse extends IBase{
 
 
 //-------------------------------------------------------
-//UPDATE IMAGE REQUEST
-export interface IEmployeeUpdateImageRequest{
-    avatar: string
-}
-
 //UPDATE IMAGE RESPONSE
 export interface IEmployeeUpdateImageResponse extends IBase{
     avatar: string | null

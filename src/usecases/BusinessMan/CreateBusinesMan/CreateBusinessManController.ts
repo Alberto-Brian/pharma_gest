@@ -9,11 +9,11 @@ export default class CreateBusinessManController {
     async handler(request: Request, response: Response): Promise<Response>{
         try {
             const {username, email, password, id_pharmacy, confirm_password } = request.body;
-            const responsee = await this.userEntity.run({
+            const result = await this.userEntity.run({
                 username, email, password
             },  id_pharmacy, confirm_password);
 
-            return response.status(201).send({responsee});
+            return response.status(201).send({result});
         } catch (error: any) {
             return response.status(500).json({
                error: error.message || "Unexpected error"

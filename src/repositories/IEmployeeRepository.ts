@@ -1,11 +1,11 @@
 import IResultPaginated from "../interfaces/IResultPaginated";
 import { ISigInResponse } from "../interfaces/IAuth";
-import IEmployee, { 
+import {
+    IEmployee, 
     IEmployeeCreateRequest,
     IEmployeeCreateResponse,
     IEmployeeUpdateRequest,
     IEmployeeUpdateResponse,
-    IEmployeeUpdateImageRequest,
     IEmployeeUpdateImageResponse,
     IEmployeeUpdateCredentialsRequest,
     IEmployeeUpdateCredentialsResponse 
@@ -19,7 +19,7 @@ import IEmployee, {
     findById: (id: string) => Promise<IEmployee | null>
     findByEmail: (email: string) => Promise<IEmployee | null>
     update: (data: IEmployeeUpdateRequest, id: string) => Promise<IEmployeeUpdateResponse>
-    upadateImage: (data: IEmployeeUpdateImageRequest, id: string) => Promise<IEmployeeUpdateImageResponse>
+    upadateImage: (filename: string, id: string) => Promise<IEmployeeUpdateImageResponse>
     updateCredentials: (data: IEmployeeUpdateCredentialsRequest, id: string) => Promise<IEmployeeUpdateCredentialsResponse>
     delete: (id: string, user: string) => Promise<void> 
  }

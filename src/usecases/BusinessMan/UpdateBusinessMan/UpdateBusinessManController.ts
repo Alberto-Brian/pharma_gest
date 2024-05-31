@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import UpdateEmployeeUseCase from "./UpdateEmployeeUseCase";
+import UpdateBusinessManUseCase from "./UpdateBusinessManUseCase";
 
-export default class UpdateEmployeeController {
+export default class UpdateBusinessManController {
     constructor(
-        private employeeUseCase: UpdateEmployeeUseCase
+        private business_manUseCase: UpdateBusinessManUseCase
     ){}
     async handler(request: Request, response: Response): Promise<Response>{
         try {
@@ -11,7 +11,7 @@ export default class UpdateEmployeeController {
             const {username, phone, gender, address} = request.body;
             if(request.body.birthdate) birthdate = new Date(request.body.birthdate);
                 const id: string = request.body.user.id;
-                const result = await this.employeeUseCase.run({
+                const result = await this.business_manUseCase.run({
                     username, phone,gender, address, birthdate
                 }, id)
                 return response.status(200).json({result})

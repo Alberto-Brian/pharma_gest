@@ -13,9 +13,17 @@ export default class SignInUseCase{
             throw new Error('Invalid email!!')
         }
 
+        if(!validator.isLowercase(data.email)){
+            throw new Error('E-mail must have lowercase letters!!')
+        }
+
         const businessManExists = await this.userRepository.findByEmail(data.email);
         if(!businessManExists){
             throw new Error('Business man does not exists!!');
+        }
+
+        if(!businessManExists.status){
+            throw new Error('Business man already desactivated');
         }
 
         const user = await this.userRepository.sigin(data.email, data.password);

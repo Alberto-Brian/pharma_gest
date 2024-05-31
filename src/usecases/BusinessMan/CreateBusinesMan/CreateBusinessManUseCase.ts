@@ -1,5 +1,5 @@
 import validator from "validator";
-import { IBusinessManRequest, ICreatedBusinessManResponse } from "../../../interfaces/IBusinessMan";
+import { IBusinessManCreateRequest, IBusinessManCreateResponse } from "../../../interfaces/IBusinessMan";
 import IPharmacyRepository from "../../../repositories/IPharmacyRepositorio";
 import IBusinessManRepository from "../../../repositories/IBusinessManRepository";
 
@@ -9,20 +9,25 @@ export default class CreateBusinessManUseCase {
         private pharmacyRepository: IPharmacyRepository
         ){}
 
-    async run(user_data: IBusinessManRequest, id_pharmacy: string, confirm_password: string): Promise<ICreatedBusinessManResponse | Error>{
+    async run(user_data: IBusinessManCreateRequest, id_pharmacy: string, confirm_password: string): Promise<IBusinessManCreateResponse | Error>{
         if(!user_data.username || !user_data.email || 
            !user_data.password || !confirm_password) {
             throw new Error("Fill all mandatory fields!!")
         }
         
         const user = await this.userRepository.findByEmail(user_data.email)
+        
+        if(!validator.isEmail(user_data.email)){
+            throw new Error('Invalid Email!!')
+        }  
+        
+        if(!validator.isLowercase(user_data.email)){
+            throw new Error('E-mail must have lowercase letters!!');
+        }
+
         if(user){
             throw new Error('user already exists!!');
         }
-
-        if(!validator.isEmail(user_data.email)){
-                    throw new Error('Invalid Email!!')
-        }    
          
         if(user_data.password !== confirm_password){
             throw new Error('Passwords do not match. Please try again')

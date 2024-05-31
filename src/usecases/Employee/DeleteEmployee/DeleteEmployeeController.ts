@@ -7,7 +7,8 @@ export default class DeleteEmployeeController {
     ){}
     async handler(request: Request, response: Response): Promise<Response>{
         try {
-                const { id, user } = request.params;
+                const { id } = request.params;
+                const user = request.body.user.id;
                 await this.employeeUseCase.run(id, user);
                 return response.status(200).json({});
 
