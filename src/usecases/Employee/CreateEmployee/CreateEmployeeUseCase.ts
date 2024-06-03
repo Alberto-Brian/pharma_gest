@@ -27,6 +27,11 @@ export default class CreateEmployeeUseCase {
             throw new Error('Passwords do not match. Please try again');
         }
 
+        const employeeExists = await this.employeeRepository.findByEmail(data.email);
+        if(employeeExists){
+            throw new Error('Employee already exists!!')
+        }
+
         if(!pharmacyExists){
             throw new Error('Pharmacy not exists!!');
         }

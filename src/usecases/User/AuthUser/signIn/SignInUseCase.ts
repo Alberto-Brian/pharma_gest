@@ -1,15 +1,14 @@
-import { builtinModules } from "module";
 import { ISigInRequest, ISigInResponse } from "../../../../interfaces/IAuth";
-import IBusinessManRepository from "../../../../repositories/IBusinessManRepository";
+import IUserRepository from "../../../../repositories/IUserRepository";
 import validator from 'validator';
 
 export default class SignInUseCase{
     constructor(
-        private userRepository: IBusinessManRepository
+        private userRepository: IUserRepository
     ){}
 
     async run(data: ISigInRequest): Promise<ISigInResponse | void>{
-       
+        
         if(!data.email){
             throw new Error('E-mail is mandatory');
         }
@@ -26,13 +25,13 @@ export default class SignInUseCase{
             throw new Error('E-mail must have lowercase letters!!')
         }
 
-        const businessManExists = await this.userRepository.findByEmail(data.email);
-        if(!businessManExists){
-            throw new Error('Business man does not exists!!');
+        const userExists = await this.userRepository.findByEmail(data.email);
+        if(!userExists){
+            throw new Error('User does not exists!!');
         }
 
-        if(!businessManExists.status){
-            throw new Error('Business man already desactivated');
+        if(!userExists.status){
+            throw new Error('User already desactivated');
         }
 
         const user = await this.userRepository.sigin(data);

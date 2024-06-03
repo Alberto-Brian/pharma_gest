@@ -25,7 +25,7 @@ export default class SignInUseCase{
         if(!employeeExists.status){
             throw new Error('Employee already desactivated!!')
         }
-        const user = await this.userRepository.sigin(data.email, data.password);
+        const user = await this.userRepository.sigin(data);
         return user;
     }
 }

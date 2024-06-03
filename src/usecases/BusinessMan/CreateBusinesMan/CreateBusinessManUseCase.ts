@@ -15,7 +15,6 @@ export default class CreateBusinessManUseCase {
             throw new Error("Fill all mandatory fields!!")
         }
         
-        const user = await this.userRepository.findByEmail(user_data.email)
         
         if(!validator.isEmail(user_data.email)){
             throw new Error('Invalid Email!!')
@@ -24,9 +23,10 @@ export default class CreateBusinessManUseCase {
         if(!validator.isLowercase(user_data.email)){
             throw new Error('E-mail must have lowercase letters!!');
         }
-
+        
+        const user = await this.userRepository.findByEmail(user_data.email)
         if(user){
-            throw new Error('user already exists!!');
+            throw new Error('Business man already exists!!');
         }
          
         if(user_data.password !== confirm_password){

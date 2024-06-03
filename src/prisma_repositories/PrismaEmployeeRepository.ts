@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import { hashPassword, comparePassword } from "../utils/bcrypt";
 import { ResultPaginated } from "../utils/Pagination";
 import { JWT_SECRET } from "../core";
+import { ISigInRequest, ISigInResponse } from "../interfaces/IAuth";
 
 import {
     IEmployee, 
@@ -21,7 +22,7 @@ import { PassThrough } from "stream";
 const db = prisma.employee;
 export default class PrismaEmployeeRepository {
 
-    async sigin(email: string, password: string): Promise<any>{
+    async sigin(data: ISigInRequest): Promise<ISigInResponse>{
 
         const user = await db.findUnique({
             select: {
@@ -39,19 +40,29 @@ export default class PrismaEmployeeRepository {
                     deleted_by: false
             },
             where: {
-                    email: email
+                    email: data.email
             }
         })
 
 
-        if(!comparePassword(password, user?.password ?? '')){
+        if(!comparePassword(data.password, user?.password ?? '')){
             throw new Error("Incorrect password, please try again!!")
         }
 
         const token = jwt.sign(user as object, JWT_SECRET ?? "mysecret",
                                { expiresIn: "10d"});
         return {
-             user,
+             user: user as {
+                id: string
+                username: string
+                email: string
+                password: string
+                status: boolean
+                phone: string
+                address: string
+                avatar: string
+                created_at: Date
+             },
              token
         }
     }
@@ -89,8 +100,11 @@ export default class PrismaEmployeeRepository {
     async read(page: number, perPage: number): Promise<IResultPaginated> {
         const employees = await db.findMany({
             where: {
-                deleted_at: null,
-                deleted_by: ''
+                AND: {
+                    deleted_at: null,
+                    deleted_by: '',
+                    status: true
+                }
             }
         });
 
@@ -101,8 +115,11 @@ export default class PrismaEmployeeRepository {
     async readAllDeleted(page: number, perPage: number): Promise<IResultPaginated> {
         const employees = await db.findMany({
             where: {
-                deleted_at: { not: null },
-                deleted_by: { not: '' }
+                AND: {
+                    deleted_at: { not: null },
+                    deleted_by: { not: '' },
+                    status: false
+                }
             }
         });
 
@@ -167,7 +184,7 @@ export default class PrismaEmployeeRepository {
 
     async updateCredentials(data: IEmployeeUpdateCredentialsRequest, id: string)
     : Promise<IEmployeeUpdateCredentialsResponse> {
-        const employee_credentials = db.update({
+        const employee_credentials = await db.update({
             data: {
                 email: data.email,
                 password: hashPassword(data.password)

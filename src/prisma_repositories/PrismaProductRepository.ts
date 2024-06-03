@@ -3,12 +3,7 @@ import IResultPaginated from '../interfaces/IResultPaginated';
 import { ResultPaginated } from '../utils/Pagination';
 import { IProductRequest, IProductResponse } from '@/interfaces/IProduct';
 import prisma from '../utils/prisma';
-import { connect } from 'http2';
-import { createConnection } from 'net';
-import { strict } from 'assert';
-import { Pharmacy, Product } from '@prisma/client';
-import { disconnect } from 'process';
-import { unitOfTime } from 'moment';
+
 
 export default class PrismaProductRepository implements IProductRepository{
     async createProduct(data: IProductRequest): Promise<IProductResponse | Error>{
@@ -45,8 +40,11 @@ export default class PrismaProductRepository implements IProductRepository{
     async readAllDeletedProducts(page: number, perPage: number): Promise<IResultPaginated>{
         const products = await prisma.product.findMany({
             where:{
+                AND: {
                     deleted_at: {not: null},
-                    deleted_by: {not: ''}
+                    deleted_by: {not: ''},
+                    status: false
+                }
             }
         })
 

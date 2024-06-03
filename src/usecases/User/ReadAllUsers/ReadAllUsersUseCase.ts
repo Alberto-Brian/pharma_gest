@@ -1,5 +1,4 @@
 import IResultPaginated from "../../../interfaces/IResultPaginated";
-import { IUserResponse } from "../../../interfaces/IUser";
 import IUserRepository from "../../../repositories/IUserRepository";
 
 export default class ReadAllUsersEntity {
@@ -8,7 +7,7 @@ export default class ReadAllUsersEntity {
     ){}
 
     async run(page: number, perPage: number): Promise<IResultPaginated> {
-        const result = this.userRepository.readAllUsers(page, perPage);
+        const result = this.userRepository.read(page, perPage);
         return result;
     }
 }

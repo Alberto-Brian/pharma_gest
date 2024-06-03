@@ -1,7 +1,6 @@
-import { IUserResponse } from "../../../interfaces/IUser";
 import IUserRepository from "../../../repositories/IUserRepository";
 
-export default class DeleteUserEntity{
+export default class DeleteUserUseCase{
     constructor(
         private userRepository: IUserRepository
     ){}

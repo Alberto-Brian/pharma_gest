@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 
 import { ResultPaginated } from '../utils/Pagination';
 import { hashPassword, comparePassword } from '../utils/bcrypt';
+import { ISigInRequest, ISigInResponse } from '../interfaces/IAuth';
 import { JWT_SECRET } from "../core";
 
 import { 
@@ -21,7 +22,7 @@ import {
 const db = prisma.business_man;
 export default class PrismaBusinessManRepository implements BusinessManRepository{
 
-    async sigin(email: string, password: string): Promise<any>{
+    async sigin(data: ISigInRequest): Promise<ISigInResponse>{
 
         const user = await db.findUnique({
             select: {
@@ -39,18 +40,28 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
                     deleted_by: false
             },
             where: {
-                    email: email
+                    email: data.email
             }
         })
 
-        if(!comparePassword(password, user?.password ?? '')){
+        if(!comparePassword(data.password, user?.password ?? '')){
             throw new Error("Incorrect password, please try again!!")
         }
 
         const token = jwt.sign(user as object, JWT_SECRET ?? "mysecret",
                                { expiresIn: "10d"});
         return {
-             user,
+             user: user as {
+                id: string
+                username: string
+                email: string
+                password: string
+                status: boolean
+                phone: string
+                address: string
+                avatar: string
+                created_at: Date
+             },
              token
         }
     }
@@ -187,7 +198,7 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
         return business_man_image
     }
     async updateCredentialsBusinessMan (data: IBusinessManUpdateCredentialsRequest, id: string): Promise<IBusinessManUpdateCredentialsResponse>{
-        const business_man_credentials = db.update({
+        const business_man_credentials = await db.update({
             data: {
                 email: data.email,
                 password: hashPassword(data.password)
@@ -208,8 +219,6 @@ export default class PrismaBusinessManRepository implements BusinessManRepositor
 
 
     async delete(id: string, user: string): Promise<void> {
-        console.log('aqui');
-        console.log(user);
         await db.update({
             where: { id },
             data:{

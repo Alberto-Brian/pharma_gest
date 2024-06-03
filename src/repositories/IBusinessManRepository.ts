@@ -9,11 +9,11 @@ import {
          IBusinessManUpdateCredentialsRequest,
          IBusinessManUpdateCredentialsResponse  
         } from "../interfaces/IBusinessMan";
-import { ISigInResponse } from "../interfaces/IAuth";
+import { ISigInRequest, ISigInResponse } from "../interfaces/IAuth";
 
 
 export default interface IBusinessManRepository {
-    sigin: (email: string, password: string) => Promise<ISigInResponse | void>
+    sigin: (data: ISigInRequest) => Promise<ISigInResponse | void>
     createBusinessMan: (data: IBusinessManCreateRequest, id_pharmacy: string) => Promise<IBusinessManCreateResponse | Error>;
     readAllBusinessMen: (page: number, perPage: number) => Promise<IResultPaginated>;
     readAllDeletedBusinessMen: (page: number, perPage: number) => Promise<IResultPaginated>;

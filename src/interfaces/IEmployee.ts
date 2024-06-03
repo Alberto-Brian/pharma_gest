@@ -40,7 +40,7 @@ export interface IEmployeeCreateResponse {
 
 
 //---------------------------------------------------------------------
-//UPDATE DATE REQUEST
+//UPDATE DATA REQUEST
 export interface IEmployeeUpdateRequest{
     username: string
     phone: string   
@@ -49,7 +49,7 @@ export interface IEmployeeUpdateRequest{
     birthdate: Date | null
 }
 
-//UPDATE DATE RESPONSE
+//UPDATE DATA RESPONSE
 export interface IEmployeeUpdateResponse extends IBase{
     username: string
     phone: string | null  

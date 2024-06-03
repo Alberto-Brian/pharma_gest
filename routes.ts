@@ -12,7 +12,7 @@ const routes = Router();
 const START_URL = "/pharmagest"
 
 // routes.use(`${START_URL}/auth`, authRoutes);
-routes.use(`${START_URL}/users`, userRoutes);
+routes.use(`${START_URL}/user`, userRoutes);
 routes.use(`${START_URL}/business_man`, businessManRoutes);
 routes.use(`${START_URL}/pharmacy`, pharmacyRoutes);
 routes.use(`${START_URL}/product`, productRoutes);

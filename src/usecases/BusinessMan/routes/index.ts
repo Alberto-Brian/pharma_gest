@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { ensuredAuthenticated } from '../../../middlewares/auth';
 import { multe } from '../../../middlewares/multer/multerImages';
+import SigInFactory from '../../../usecases/BusinessMan/AuthBusinessMan/signIn/SigInFactory';
 import CreateBusinessManFactory  from '../CreateBusinesMan/CreateBusinessManFactory';
 import ReadAllBusinessMenFactory from '../ReadAllBusinessMen/ReadAllBusinessMenFactory';
 import FindByIdBusinessManFactory from '../findByIdBusiness/FindByIdBusinessManFactory';
@@ -8,12 +9,10 @@ import DeleteBusinessManFactory from '../DeleteBusinessMan/DeleteBusinessManFact
 import FindByEmailBusinessManFactory from '../FindByEmailBusinessMan/FindByEmailBusinessManFactory';
 import ReadAllDeletedBusinessMenFactory from '../ReadAllDeletedBusinessMen/ReadAllDeletedBusinessMenFactory';
 import UpdateCredentialsBusinessManFactory from '../UpdateCredentialsBusinessMan/UpdateCredentialsBusinessManFactory';
-import SigInFactory from '../../../usecases/BusinessMan/AuthBusinessMan/signIn/SigInFactory';
 import UpdateBusinessManFactory from '../UpdateBusinessMan/UpdateBusinessManFactory';
-import UpdateImageBusinessManFactory from '../UpdateImageEmployee/UpdateImageBusinessManFactory';
+import UpdateImageBusinessManFactory from '../UpdateImageBusinessMan/UpdateImageBusinessManFactory';
+
 export const businessManRoutes = Router();
-
-
 
 businessManRoutes.route('/auth')
     .post((request, response) => { return SigInFactory().handler(request, response)})

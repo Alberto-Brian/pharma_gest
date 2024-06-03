@@ -1,12 +1,11 @@
-import { IUserResponse } from "../../../interfaces/IUser";
+import { IUser } from "../../../interfaces/IUser";
 import IUserRepository from "../../../repositories/IUserRepository";
-import prisma from "../../../utils/prisma";
 
-export default class FindByEmailUserEntity {
+export default class FindByEmailUserUseCase {
   constructor(
     private userRepository: IUserRepository
   ){}
-  async run(email: string): Promise<IUserResponse| Error> {
+  async run(email: string): Promise<IUser | Error> {
     const user = await this.userRepository.findByEmail(email);
     if(!user){
       throw new Error('This user doesn\'t exist')

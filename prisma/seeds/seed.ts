@@ -7,6 +7,7 @@ import product_seed from './Product';
 import social_network_seed from './Social_networks';
 import nationality_seed from './Nationality';
 import employee_seed from './Employee'
+import user_seed from './User';
 
 async function main(){
 
@@ -21,6 +22,7 @@ async function main(){
     const business_men_id = await busineess_man_seed();
     const products_id =  await product_seed(pharmacies_id, categories_id);
     const employees_id = await employee_seed();
+    const users_id = await user_seed();
 
     return {
         social_networks_id,
@@ -29,7 +31,8 @@ async function main(){
         pharmacies_id,
         business_men_id,
         products_id,
-        employees_id
+        employees_id,
+        users_id
     };
 }
 

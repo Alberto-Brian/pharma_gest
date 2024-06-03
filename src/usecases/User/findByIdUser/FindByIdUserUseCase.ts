@@ -1,12 +1,12 @@
 import IUserRepository from "../../../repositories/IUserRepository";
-import { IUserResponse } from "../../../interfaces/IUser";
+import { IUser } from "../../../interfaces/IUser";
 
-export default class FindByIdUserEntity{
+export default class FindByIdUserUseCase{
   constructor(
     private userRepository: IUserRepository
   ){ }
 
-  async run(id: string): Promise<IUserResponse | Error>{
+  async run(id: string): Promise<IUser | Error>{
     const user = await this.userRepository.findById(id);
     if(!user){
       throw new Error("This user doesn\'t exist");

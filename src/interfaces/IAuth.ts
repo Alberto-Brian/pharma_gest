@@ -3,7 +3,7 @@ export interface ISigInResponse{
         id: string
         username: string
         email: string
-        // password: string
+        password: string
         status: boolean
         phone: string
         address: string
