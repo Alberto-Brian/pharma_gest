@@ -1,8 +1,9 @@
 import { Router} from 'express';
 import CreateCategoryFactory from '../CreateCategory/CreateCategoryFactory';
-import FindByNameCategoryFactory from '../FindCategory/FindByNameCategoryFactory';
+import FindByNameCategoryFactory from '../FindByNameCategory/FindByNameCategoryFactory';
 import ReadAllCategoriesFactory from '../ReadAllCategories/ReadAllCategoriesFactory';
 import DeleteCategoryFactory from '../DeleteCategory/DeleteCategoryFactory';
+import { ensuredAuthenticated } from '../../../middlewares/auth';
 
 export const categoryRoutes = Router();
 
@@ -12,7 +13,10 @@ categoryRoutes.route('/create')
 categoryRoutes.route('/read')
     .get((request, response) => {return ReadAllCategoriesFactory().handler(request, response)} )
 
-categoryRoutes.route('/find')
+categoryRoutes.route('/find/id/:id')
+    .get((request, response) => { return FindByNameCategoryFactory().handler(request, response)} )
+
+categoryRoutes.route('/find/name/:name')
     .get((request, response) => { return FindByNameCategoryFactory().handler(request, response)} )
 
 categoryRoutes.route('/delete/:id')

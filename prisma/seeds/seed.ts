@@ -40,8 +40,8 @@ async function main(){
 main() 
     .then(async (response) => {
         await prisma.$connect();
-        console.log("executado com sucesso!!")
         response && console.log(response)
+        console.log("executado com sucesso!!")
     })
     .catch(async (error: any) => {
         console.log(error);

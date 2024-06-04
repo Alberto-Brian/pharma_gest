@@ -53,12 +53,13 @@ export default class PrismaProductRepository implements IProductRepository{
     }
 
 
-    async findByCategoryProducts(id_category: string, page: number, perPage: number): Promise<IResultPaginated>{
+    async findByCategoryProducts(id_category: string, id_pharmacy: string, page: number, perPage: number): Promise<IResultPaginated>{
         const products = await prisma.product.findMany({
             where: {
                 deleted_at: null,
                 deleted_by: '',
-                id_category
+                id_category,
+                id_pharmacy
             }
         })
 

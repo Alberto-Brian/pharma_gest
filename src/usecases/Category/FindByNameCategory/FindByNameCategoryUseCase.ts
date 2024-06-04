@@ -7,7 +7,7 @@ export default class FindByNameCategoryUseCase {
     ){}
 
     async run(name: string): Promise<ICategoryResponse | Error>{
-        const categoryExists = await this.categoryRepository.find(name);
+        const categoryExists = await this.categoryRepository.findByName(name);
         if(!categoryExists){
             throw new Error('Category does not exists!!');
         }

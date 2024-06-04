@@ -1,12 +1,15 @@
 import IPharmacyRepository from "../repositories/IPharmacyRepositorio";
-import { IPharmacyRequest, IPharmacyResponse } from "../interfaces/IPharmacy";
 import prisma from "../utils/prisma";
-import { ResultPaginated } from "../utils/Pagination";
 import IResultPaginated from "../interfaces/IResultPaginated";
 
+import { IPharmacyRequest, IPharmacyResponse } from "../interfaces/IPharmacy";
+import { ResultPaginated } from "../utils/Pagination";
+import { Product } from "../utils/types";
+
+const db = prisma.pharmacy;
 export default class PrismaPharmacyRepository implements IPharmacyRepository {
     async createPharmacy(data: IPharmacyRequest): Promise<IPharmacyResponse | Error>{
-            const pharmacy = await prisma.pharmacy.create({
+            const pharmacy = await db.create({
                 data
                 // select: {
                 //     id: true,
@@ -24,7 +27,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
     }
 
     async readPharmacies(page: number, perPage: number): Promise<IResultPaginated>{
-            const pharmacies = await prisma.pharmacy.findMany({
+            const pharmacies = await db.findMany({
                 where: {
                     deleted_at: null,
                     deleted_by: '',
@@ -37,7 +40,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
     }
 
     async readPendingPharmacies(page: number, perPage: number): Promise<IResultPaginated>{
-        const pharmacies = await prisma.pharmacy.findMany({
+        const pharmacies = await db.findMany({
             where: {
                 deleted_at: null,
                 deleted_by: '',
@@ -50,7 +53,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
     }
 
     async readAllDeletedPharmacies(page: number, perPage: number): Promise<IResultPaginated>{
-        const pharmacies = await prisma.pharmacy.findMany({
+        const pharmacies = await db.findMany({
             where: {
                 deleted_at:{ not: null },
                 deleted_by: { not: '' }
@@ -62,7 +65,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
     }
 
     async findByEmail(email: string): Promise<IPharmacyResponse | null>{
-            const pharmacy = await prisma.pharmacy.findFirst({
+            const pharmacy = await db.findFirst({
                 where: { email },
                 select: {
                     id: true,
@@ -81,7 +84,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
 
 
     async findById(id: string): Promise<IPharmacyResponse | null>{
-        const pharmacy = await prisma.pharmacy.findFirst({
+        const pharmacy = await db.findFirst({
             where: { id },
             select: {
                 id: true,
@@ -99,7 +102,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
     }
 
     async findByIdPendingPharmacy(id: string): Promise<IPharmacyResponse | null>{
-        const pharmacy = await prisma.pharmacy.findFirst({
+        const pharmacy = await db.findFirst({
             where: { id, status: false },
             select: {
                 id: true,
@@ -117,7 +120,7 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
 
 
     async delete(id: string, user: string): Promise<void>{
-         await prisma.pharmacy.update({
+         await db.update({
             where: { id },
             data: {
                 status: false,
@@ -127,5 +130,6 @@ export default class PrismaPharmacyRepository implements IPharmacyRepository {
          })
 
     }
+
 }
 

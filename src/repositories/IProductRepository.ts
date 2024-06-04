@@ -8,7 +8,7 @@ export default interface IProductRepository {
     findByIdProduct: (id: string) => Promise<IProductResponse | null>
     findByNameProduct: (name: string) => Promise<IProductResponse | null>
     findByPharmacyProduct: (id_pharmacy: string, page: number, perPage: number) => Promise<IResultPaginated>
-    findByCategoryProducts: (id_category: string, page: number, perPage: number) => Promise<IResultPaginated>
+    findByCategoryProducts: (id_category: string, id_pharmacy: string, page: number, perPage: number) => Promise<IResultPaginated>
     deleteProduct: (id: string, user: string) => Promise<void>
 }
 

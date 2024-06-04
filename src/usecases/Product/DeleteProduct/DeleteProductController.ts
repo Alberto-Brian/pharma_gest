@@ -9,7 +9,8 @@ export default class DeleteProductController {
     async handler(request: Request, response: Response): Promise<Response> {
         try {
 
-            const { id, user } = request.params;
+            const { id } = request.params;
+            const user = request.body.user.id;
             await this.productUseCase.run(id, user);
             return response.status(200).json({});
             

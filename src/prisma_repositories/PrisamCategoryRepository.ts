@@ -19,9 +19,17 @@ export default class PrismaCategoryRepository implements ICategoryRepository{
         return result;
     }
 
-    async find(name: string): Promise<ICategoryResponse | null>{
+    async findByName(name: string): Promise<ICategoryResponse | null>{
         const category = await prisma.category.findFirst({
             where: { name }
+        })
+
+        return category;
+    }
+
+    async findById(id: string): Promise<ICategoryResponse | null>{
+        const category = await prisma.category.findFirst({
+            where: { id }
         })
 
         return category;

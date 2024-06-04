@@ -7,7 +7,7 @@ export default class DeleteCategoryUseCase {
     ){}
 
     async run(data: ICategoryRequest): Promise<ICategoryResponse | Error>{
-        const categoryExists = await this.categoryRepository.find(data.name);
+        const categoryExists = await this.categoryRepository.findByName(data.name);
         if(categoryExists){
             throw new Error('Category already exists!!');
         }
