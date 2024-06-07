@@ -1,5 +1,13 @@
-import { IProductRequest, IProductResponse } from "../interfaces/IProduct";
 import  IResultPaginated  from "../interfaces/IResultPaginated";
+import { 
+        IProductRequest, 
+        IProductResponse, 
+        IProductUpdateRequest,
+        IProductUpdateResponse, 
+        IProductUpdatePriceRequest, 
+        IProductUpdatePriceResponse,
+        IProductUpdateImageResponse,
+    } from "../interfaces/IProduct";
 
 export default interface IProductRepository {
     createProduct: (data: IProductRequest) => Promise<IProductResponse | Error>
@@ -10,6 +18,9 @@ export default interface IProductRepository {
     findByPharmacyProduct: (id_pharmacy: string, page: number, perPage: number) => Promise<IResultPaginated>
     findByCategoryProducts: (id_category: string, id_pharmacy: string, page: number, perPage: number) => Promise<IResultPaginated>
     deleteProduct: (id: string, user: string) => Promise<void>
+    updateProduct: (data: IProductUpdateRequest, id: string) => Promise<IProductUpdateResponse>
+    updatePriceProduct: (data: IProductUpdatePriceRequest) => Promise<IProductUpdatePriceResponse>
+    updateImageProduct: (filename: string, id: string) => Promise<IProductUpdateImageResponse>
 }
 
 //TO DO LIST 

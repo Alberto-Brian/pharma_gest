@@ -1,8 +1,17 @@
-import IProductRepository from '@/repositories/IProductRepository';
+import IProductRepository from '../repositories/IProductRepository';
 import IResultPaginated from '../interfaces/IResultPaginated';
-import { ResultPaginated } from '../utils/Pagination';
-import { IProductRequest, IProductResponse } from '@/interfaces/IProduct';
 import prisma from '../utils/prisma';
+import { ResultPaginated } from '../utils/Pagination';
+import { 
+        IProductRequest, 
+        IProductResponse,
+        IProductUpdateRequest,
+        IProductUpdateResponse,
+        IProductUpdatePriceRequest,
+        IProductUpdatePriceResponse,
+        IProductUpdateImageResponse
+     } from '../interfaces/IProduct';
+
 
 
 export default class PrismaProductRepository implements IProductRepository{
@@ -112,6 +121,63 @@ export default class PrismaProductRepository implements IProductRepository{
 
         const results = ResultPaginated(products, page, perPage);
         return results
+    }
+
+    async updateProduct(data: IProductUpdateRequest, id: string):
+    Promise<IProductUpdateResponse>{
+        const product = await prisma.product.update({
+            where: { id },
+            data: {
+                name: data.name,
+                description: data.description
+            },
+            select: {
+                id: true,
+                name: true,
+                description: true,
+                created_at: true,
+                updated_at:true
+            }
+        })
+
+        return  product;
+    }
+    
+    async updatePriceProduct(data: IProductUpdatePriceRequest): Promise<IProductUpdatePriceResponse>{
+        const old_price = await prisma.product.findUnique({ 
+            where: { id: data.id }, select: { price: true }
+        })
+        const product = await prisma.product.update({
+            where: { id: data.id },
+            data: {
+                old_price: parseFloat(old_price?.price.toFixed(2) as string),
+                price: data.price
+            },
+            select: {
+                id: true,
+                price: true,
+                old_price: true,
+                created_at: true,
+                updated_at: true
+            }
+        })
+
+        return product;
+    }
+
+    async updateImageProduct(filename: string, id: string): Promise<IProductUpdateImageResponse>{
+        const product = await prisma.product.update({
+            data: { image: filename },
+            where: { id },
+            select: {
+                id: true,
+                image: true,
+                created_at: true,
+                updated_at: true
+            }
+        })
+
+        return product
     }
 
     async deleteProduct(id: string, user: string): Promise<void> {

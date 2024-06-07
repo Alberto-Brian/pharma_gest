@@ -4,3 +4,4 @@ export type MODEL = {
 } 
 
 export type Product  = {product_id: string, count: number}
+export type Cart = {products: Object[], total: number}

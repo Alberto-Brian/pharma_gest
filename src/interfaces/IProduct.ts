@@ -32,3 +32,36 @@ export interface IProductResponse extends IBase {
     id_category: string
 }
 
+//------------------------------------------------------------
+//UPDATE PRICE REQUEST
+export interface IProductUpdatePriceRequest{
+    id: string
+    price: number
+}
+
+//UPDATE PRICE RESPONSE
+export interface IProductUpdatePriceResponse extends IBase{
+    price: number
+    old_price: number | null
+}
+
+
+//--------------------------------------------------------
+//UPDATE DATA REQUEST
+export interface IProductUpdateRequest{
+    name: string
+    description: string | null
+}
+
+//UPDATE DATA RESPONSE
+export interface IProductUpdateResponse extends IBase{
+    name: string
+    description: string | null
+}
+
+
+//-------------------------------------------------------
+//UPDATE IMAGE RESPONSE
+export interface IProductUpdateImageResponse extends IBase{
+    image: string | null
+}

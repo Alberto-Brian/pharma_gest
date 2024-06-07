@@ -10,7 +10,9 @@ import FindByNameProductFactory from '../FindByNameProduct/FindByNameProductFact
 import FindByPharmacyProductFactory from '../FindByPharmacyProducts/FindByPharmacyProductFactory';
 import FindByCategoryProductFactory from '../FindByCategoryProduct/FindByCategoryProductFactory';
 import DeleteProductFactory from '../DeleteProduct/DeleteProductFactory';
-
+import UpdatePriceProductFactory from '../UpdatePriceProduct/UpdatePriceProductFactory';
+import UpdateImageProductFactory from '../UpdateImageProduct/UpdateImageProductFactory';
+import UpdateProductFactory from '../UpdateProduct/UpdateProductFactory';
 const productRoutes = Router();
 
 productRoutes.route('/create')
@@ -39,7 +41,16 @@ productRoutes.route('/find/pharmacy/:id_pharmacy/category/:id_category')
   
     
 productRoutes.route('/delete/:id')
-    .get(ensuredAuthenticated(), (request, response) => {return DeleteProductFactory().handler(request, response)});  
+    .delete(ensuredAuthenticated(), (request, response) => {return DeleteProductFactory().handler(request, response)});  
+
+productRoutes.route('/update/data')
+    .put(ensuredAuthenticated(), (request, response) => {return UpdateProductFactory().handler(request, response)})    
     
+productRoutes.route('/update/price')
+    .put((request, response) => {return UpdatePriceProductFactory().handler(request, response)})    
+
+productRoutes.route('/update/image')
+    .put(multe('product_images').single('image'),
+    (request, response) => {return UpdateImageProductFactory().handler(request, response)})
 
 export { productRoutes };
