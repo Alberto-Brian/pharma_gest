@@ -1,9 +1,11 @@
-import { ICartResponse } from "../interfaces/ICart";
+import { ICartBuyingResponse } from "../interfaces/ICart";
 import { Product, Cart } from "../utils/types";
 
-export default interface ICartInterface {
+export default interface ICartRepository {
     addProductToCart: (product: Product ) => Promise<Object>
-    buyProducts: (cart: Cart) => Promise<void>
+    removeProductInCart: (product: string) => Promise<Object>
+    showCart: () => Promise<ICartBuyingResponse>
+    buyProductsInCart: () => Promise<void>
 
     // readUsers: (page: number, perPage: number)  => Promise<IResultPaginated>
     // readEmployees: (page: number, perPage: number)  => Promise<IResultPaginated>

@@ -21,15 +21,16 @@ export interface IProductRequest {
     description: string | null
     id_pharmacy: string
     id_category: string
-}
-
-export interface IProductResponse extends IBase {
-    name: string
-    price: number
-    image: string
-    description: string | null
-    // id_pharmacy: string | null
-    id_category: string
+    }
+    
+    export interface IProductResponse extends IBase {
+        name: string
+        price: number
+        image: string
+        description: string | null
+        // id_pharmacy: string | null
+        id_category: string
+        status: boolean
 }
 
 //------------------------------------------------------------

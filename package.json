@@ -10,7 +10,11 @@
     "seed": "npx ts-node prisma/seeds/seed.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Alberto Massanza",
+    "email": "albertokiowa10@gmail.com",
+    "url": ""
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

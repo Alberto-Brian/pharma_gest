@@ -2,13 +2,13 @@ import ICartRepository from "../../../repositories/ICartRepository";
 import { ICartBuyingResponse } from "../../../interfaces/ICart";
 import { Cart } from "../../../utils/types";
 
-export default class BuyProductUseCase {
+export default class ShowCartUseCase {
     constructor(
         private cartRepository: ICartRepository
     ){}
 
- async run(): Promise<void>{
-        await this.cartRepository.buyProductsInCart();
-        return
+ async run(): Promise<ICartBuyingResponse>{
+     const result = await this.cartRepository.showCart();
+     return result;
     }
 }
