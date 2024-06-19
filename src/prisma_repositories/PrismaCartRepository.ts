@@ -3,13 +3,15 @@ import prisma from "../utils/prisma";
 import { Product } from "../utils/types";
 import { ICartResponse, ICartBuyingResponse } from "../interfaces/ICart";
 import { Cart } from '../utils/types'
+import { ResultCartPaginated } from "../utils/Pagination";
+import { IResultCartPaginated } from "@/interfaces/IResultPaginated";
 
 const db_product = prisma.product;
 const cart: Cart  = { products: [], total: 0 }
 
 export default class PrismaCartRepository implements ICartRepository {
     
-    async addProductToCart(product: Product): Promise<Cart>{
+    async addProductToCart(product: Product): Promise<ICartResponse>{
        let doPush: boolean = true;
        const found_product = await db_product.findUnique({
            where: { id: product.product_id },
@@ -27,8 +29,8 @@ export default class PrismaCartRepository implements ICartRepository {
                for(const element of cart.products){
                    if(element && (element.id === product.product_id)){
                        element.count += product.count
-                       element.subtotal = (element.count * found_product?.price!).toString();
                        doPush = false;
+                       element.subtotal = (element.count * found_product?.price!).toString();
                    }
                }
                
@@ -39,24 +41,28 @@ export default class PrismaCartRepository implements ICartRepository {
     doPush && cart.products.push(prodd);
 
     cart.total = parseFloat(cart.total.toFixed(2));
-    return cart
+
+    const currentProduct = cart.products.filter( item => item.id === product.product_id)
+    return currentProduct[0]
 }
 
 
-    async showCart(): Promise<ICartBuyingResponse>{
-        const products = cart.products.map((product) => {
+    async showCart(page: number, perPage: number): Promise<IResultCartPaginated>{
+        let products = cart.products.map(product => {
             // if(product){
+                const id = product.id
                 const name = product.name
                 const price = product.price
                 const count = product.count
                 const subtotal = product.subtotal
-                return {name, price, count, subtotal}
+                return {id, name, price, count, subtotal}
             // } 
          } )
 
-        const result =  { products, total: cart.total.toFixed(2) }
-        return result;
-        }
+         const resultCartPagitnated = await ResultCartPaginated(products, page, perPage, cart.total.toFixed(2));
+        // const result =  { products, total: cart.total.toFixed(2) }
+        return resultCartPagitnated;
+    }
         
     async buyProductsInCart(): Promise<void>{
 
@@ -69,15 +75,14 @@ export default class PrismaCartRepository implements ICartRepository {
         }
     
     async removeProductInCart(product: string): Promise<Cart>{
-        for(const oneproduct in cart.products){
-            if(cart.products[oneproduct].id === product){
-                delete cart.products[oneproduct];
-                cart.total = 0;
-                for(const instance of cart.products){
-                    if(instance) cart.total += parseFloat(instance.subtotal);
-                }
+            const index = cart.products.findIndex(item => item.id == product);
+            if(index !== -1) cart.products.splice(index, 1);
+            cart.total = 0;
+            for(const instance of cart.products){
+                if(instance) cart.total += parseFloat(instance.subtotal);
             }
-        }
+            
         return cart
-    }
+    } 
+
 }

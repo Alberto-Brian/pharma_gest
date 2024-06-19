@@ -16,5 +16,6 @@ cartRoutes.route('/show/cart')
 cartRoutes.route('/buy')
     .get( (request, response) => {return BuyProductFactory().handler(request, response)})
 
-cartRoutes.route('/Remove/:id')
+cartRoutes.route('/remove/:id')
     .get( (request, response) => {return RemoveProductFactory().handler(request, response)})
+     
